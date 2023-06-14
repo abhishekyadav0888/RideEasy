@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/tripbookings")
+@RequestMapping("/trip-bookings")
 public class TripBookingController {
 
     @Autowired
@@ -19,31 +22,32 @@ public class TripBookingController {
     @PostMapping
     public ResponseEntity<TripBooking> insertTripBooking(@Valid @RequestBody TripBooking tripBooking) {
         try {
-            TripBooking insertedBooking = tripBookingService.insertTripBooking(tripBooking);
-            return ResponseEntity.ok(insertedBooking);
+            TripBooking createdTripBooking = tripBookingService.insertTripBooking(tripBooking);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTripBooking);
         } catch (RideEasyException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TripBooking> updateTripBooking(@PathVariable("id") int tripBookingId,
-                                                         @RequestBody TripBooking tripBooking) {
+    @PutMapping("/{tripBookingId}")
+    public ResponseEntity<TripBooking> updateTripBooking(
+            @PathVariable("tripBookingId") int tripBookingId, @Valid @RequestBody TripBooking tripBooking) {
+        tripBooking.setTripBookingId(tripBookingId);
         try {
-            TripBooking existingBooking = tripBookingService.updateTripBooking(tripBooking);
-            return ResponseEntity.ok(existingBooking);
+            TripBooking updatedTripBooking = tripBookingService.updateTripBooking(tripBooking);
+            return ResponseEntity.ok(updatedTripBooking);
         } catch (RideEasyException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<TripBooking> deleteTripBooking(@PathVariable("id") int tripBookingId) {
+    @DeleteMapping("/{tripBookingId}")
+    public ResponseEntity<TripBooking> deleteTripBooking(@PathVariable("tripBookingId") int tripBookingId) {
         try {
-            TripBooking deletedBooking = tripBookingService.deleteTripBooking(tripBookingId);
-            return ResponseEntity.ok(deletedBooking);
+            TripBooking deletedTripBooking = tripBookingService.deleteTripBooking(tripBookingId);
+            return ResponseEntity.ok(deletedTripBooking);
         } catch (RideEasyException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
@@ -53,7 +57,7 @@ public class TripBookingController {
             List<TripBooking> tripBookings = tripBookingService.viewAllTripsCustomer(customerId);
             return ResponseEntity.ok(tripBookings);
         } catch (RideEasyException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
@@ -63,7 +67,7 @@ public class TripBookingController {
             double billAmount = tripBookingService.calculateBill(customerId);
             return ResponseEntity.ok(billAmount);
         } catch (RideEasyException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

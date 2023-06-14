@@ -24,8 +24,8 @@ public class TripBookingServiceImpl implements TripBookingService {
     @Autowired
     private TripBookingRepository tripBookingRepository;
 
-    @Autowired
-    private DriverRepository DriverRepository;
+//    @Autowired
+//    private DriverRepository DriverRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -125,16 +125,16 @@ public class TripBookingServiceImpl implements TripBookingService {
     }
 
     @Override
-    public List<TripBooking> viewAllTripsCustomer(int customerld) throws RideEasyException {
+    public List<TripBooking> viewAllTripsCustomer(int customerId) throws RideEasyException {
         logger.info("Retrieving all trip bookings for customer with ID: {}", customerId);
         try{
-            Customer customer = customerRepository.findById(customerld)
-                    .orElseThrow(() -> new RideEasyException("Customer not found with ID: " + customerld));
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new RideEasyException("Customer not found with ID: " + customerId));
 
             return tripBookingRepository.findAllByCustomerId(customerId);
         }
         catch (Exception e) {
-            logger.error("Error occurred while retrieving trip bookings for customer with ID: {}", customerld, e);
+            logger.error("Error occurred while retrieving trip bookings for customer with ID: {}", customerId, e);
             throw new RideEasyException("Failed to retrieve trip bookings for customer", e);
         }
     }
