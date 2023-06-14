@@ -27,7 +27,7 @@ public class Driver extends AbstractUser{
     private String licenceNumber;
 
     private Float rating;
-
+    private Boolean isAvailable=true;
 
     //RelationShip Start
 
