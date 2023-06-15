@@ -1,7 +1,7 @@
 package com.rideeasy.exception;
 
 public class RideEasyException extends RuntimeException{
-    RideEasyException(String msg){
+    public RideEasyException(String msg){
         super(msg);
     }
 }
