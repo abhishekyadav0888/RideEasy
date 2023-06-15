@@ -1,11 +1,4 @@
-package com.masai.Controller;
-
-import java.time.LocalDate;
-
-import java.time.LocalDateTime;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.rideeasy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.service.annotation.DeleteExchange;
 
-import com.masai.Entity.Admin;
-import com.masai.Entity.Cab;
-import com.masai.Entity.TripBooking;
-import com.masai.Service.AdminService;
+import com.rideeasy.exception.RideEasyException;
+import com.rideeasy.model.Admin;
+import com.rideeasy.service.AdminService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -30,61 +26,36 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdminHandler(@RequestBody Admin admin) {
-		Admin savedAdmin = adminService.saveAdmin(admin);
-		return new ResponseEntity<Admin>(savedAdmin,HttpStatus.OK);
+	@PostMapping
+	public ResponseEntity<Admin> insertAdminController(@Valid @RequestBody Admin admin){
+		try {
+			Admin insertedAdmin = adminService.insertAdmin(admin);
+			return ResponseEntity.status(HttpStatus.CREATED).body(insertedAdmin);
+		} catch (RideEasyException ex){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
 	}
 	
-	
+	@PutMapping("/{adminId}")
+	public ResponseEntity<Admin> updateAdminController(@PathVariable Integer adminId, @Valid @RequestBody Admin admin){
+		try {
+			Admin updatedAdmin = adminService.updateAdmin(adminId, admin);
+			return ResponseEntity.status(HttpStatus.OK).body(updatedAdmin);
+		} catch (RideEasyException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
 	
 	@DeleteMapping("/{adminId}")
-	public ResponseEntity<Admin> deleteMappingHandler(@PathVariable("adminId") Integer adminId) {
-		Admin returnAdmin = adminService.delete(adminId); 
-		return new ResponseEntity<Admin>(returnAdmin,HttpStatus.OK);
+	public ResponseEntity<Admin> deleteAdminController(@PathVariable Integer adminId){
+		try {
+			Admin deletedAdmin = adminService.deleteAdmin(adminId);
+			return ResponseEntity.status(HttpStatus.OK).body(deletedAdmin);
+		} catch (RideEasyException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
 	
-	@GetMapping("/trips/{customerId}")
-	public ResponseEntity<List<TripBooking>>  getAllTripsHandler(@PathVariable("customerId") Integer customerId){
-		
-		List<TripBooking> trips= adminService.getAllTrips(customerId);
-		return new ResponseEntity<List<TripBooking>>(trips,HttpStatus.OK);
-	}
-	
-	@GetMapping("/trips/driverwise")
-	public ResponseEntity<List<TripBooking>> getTripsDriverwiseHandler(){
-		
-		List<TripBooking> trips= adminService.getTripsDriverwise();
-		return new ResponseEntity<List<TripBooking>>(trips,HttpStatus.OK);
-	}
-	
-	
-	@PutMapping("/")
-	public ResponseEntity<String> updateAdminHandler(@RequestBody Admin admin) {
-		Admin updatedAdmin = adminService.update(admin);
-		return new ResponseEntity<String>("admin updated "+updatedAdmin,HttpStatus.ACCEPTED); 
-	}
-	
-	
-	
-	
-	@GetMapping("/customertrips")
-	public List<TripBooking> getTripsCustomerwiseHandler(){
-		List<TripBooking> list = adminService.getTripsCustomerwise();
-		return list;
-	}
-	
-	@GetMapping("/datewisetrips")
-	public List<TripBooking> getTripsDatewiseHandler(){
-		List<TripBooking> list = adminService.getTripsDatewise();
-		return list;
-	}
-	
-	@GetMapping("trips/{customerId}/{date}")
-	public List<TripBooking> getTripsDatewiseAndCustomerHandler(@PathVariable("customerId") Integer customerId, @PathVariable("date") String date){
-		LocalDate date1 = LocalDate.parse(date);
-		List<TripBooking> list = adminService.getTripsDatewiseAndCustomer(customerId, date1);
-		return list;
+//	@GetMapping("/{customerId}")
 
-	}
 }

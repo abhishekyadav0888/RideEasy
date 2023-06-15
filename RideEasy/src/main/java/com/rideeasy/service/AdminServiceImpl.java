@@ -16,7 +16,7 @@ import com.rideeasy.model.Customer;
 import com.rideeasy.model.TripBooking;
 import com.rideeasy.repository.AdminRepository;
 import com.rideeasy.repository.CustomerRepositorya;
-import com.rideeasy.repository.TripBookingRepositorya;
+import com.rideeasy.repository.TripBookingRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +27,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminRepository adminRepo;
 	@Autowired
-	private CustomerRepositorya customerRepo;
+	private CustomerRepository customerRepo;
 	@Autowired
-	private TripBookingRepositorya tripBookingRepo;
+	private TripBookingRepository tripBookingRepo;
 	
 	@Override
 	public Admin insertAdmin(Admin admin) throws InvalidInputException {
@@ -96,7 +96,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<TripBooking> getTripsCabWise(Integer desiredCabId) throws DataNotFoundException {
-		List<TripBooking> trips = tripBookingRepo.getAllTrips();
+		List<TripBooking> trips = tripBookingRepo.findAllTripBooking();
 
         if (trips.isEmpty()) {
 			log.warn("Trips with this cabId is not present in database.");
@@ -118,7 +118,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<TripBooking> getTripsCustomerWise(Integer customerId) throws DataNotFoundException {
-		List<TripBooking> trips = tripBookingRepo.getAllTrips();
+		List<TripBooking> trips = tripBookingRepo.findAllTripBooking();
 
         if (trips.isEmpty()) {
 			log.warn("Trips with this customerId is not present in database.");
@@ -140,7 +140,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<TripBooking> getTripsDateWise(LocalDateTime dateTime) throws DataNotFoundException {
-		List<TripBooking> trips = tripBookingRepo.getAllTrips();
+		List<TripBooking> trips = tripBookingRepo.findAllTripBooking();
 
         if (trips.isEmpty()) {
 			log.warn("Trips are not present in database.");
