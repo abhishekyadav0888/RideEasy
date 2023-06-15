@@ -1,5 +1,7 @@
 package com.rideeasy.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.service.annotation.DeleteExchange;
 
 import com.rideeasy.exception.RideEasyException;
 import com.rideeasy.model.Admin;
+import com.rideeasy.model.TripBooking;
 import com.rideeasy.service.AdminService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -56,6 +59,14 @@ public class AdminController {
 		}
 	}
 	
-//	@GetMapping("/{customerId}")
+	@GetMapping("/{customerId}")
+	public ResponseEntity<List<TripBooking>> getAllTripsOfCustomerController(@PathVariable Integer customerId){
+		try {
+			List<TripBooking> tripBookings = adminService.getAllTripsOfCustomer(customerId);
+			return ResponseEntity.status(HttpStatus.OK).body(tripBookings);
+		} catch (RideEasyException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
 
 }
