@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminRepository adminRepo;
 	@Autowired
-	private CustomerRepositorya customerRepo;
+	private CustomerRepository customerRepo;
 	@Autowired
 	private TripBookingRepository tripBookingRepo;
 	
