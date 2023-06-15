@@ -41,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public Customer deleteCustomer(Integer customerId) {
         Optional<Customer> opt = customerRepository.findById(customerId);
+        log.info("try to delete customer");
         if(opt.isPresent()){
             Customer customer = opt.get();
             customer.setIsDeleted(true);
