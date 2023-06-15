@@ -32,6 +32,7 @@ public class CustomerController {
         log.info("Try to add update Customer : CustomerController");
         Customer updateCustomer = customerService.updateCustomer(customer);
         log.info("Customer updated successful : CustomerController");
+        log.info("Customer updated successful : CustomerController");
         return new ResponseEntity<>(updateCustomer, HttpStatus.CREATED);
     }
 
