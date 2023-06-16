@@ -132,7 +132,7 @@ public class TripBookingServiceImpl implements TripBookingService {
             Customer customer = customerRepository.findById(customerId)
                     .orElseThrow(() -> new RideEasyException("Customer not found with ID: " + customerId));
 
-            return tripBookingRepository.findAllByCustomerId(customerId);
+            return tripBookingRepository.findAllByCustomer(customer);
         }
         catch (Exception e) {
             logger.error("Error occurred while retrieving trip bookings for customer with ID: {}", customerId, e);
@@ -145,7 +145,10 @@ public class TripBookingServiceImpl implements TripBookingService {
         logger.info("Calculating bill for customer with ID: {}", customerId);
 
         try{
-            List<TripBooking> tripBookings = tripBookingRepository.findAllByCustomerId(customerId);
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new RideEasyException("Customer not found with ID: " + customerId));
+
+            List<TripBooking> tripBookings = tripBookingRepository.findAllByCustomer(customer);
 
             tripBookings.sort(Comparator.comparing(TripBooking::getFromDateTime).reversed());
 
