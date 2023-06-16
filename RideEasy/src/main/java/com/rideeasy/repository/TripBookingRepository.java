@@ -1,5 +1,6 @@
 package com.rideeasy.repository;
 
+import com.rideeasy.model.Customer;
 import com.rideeasy.model.TripBooking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,5 +13,7 @@ public interface TripBookingRepository extends JpaRepository<TripBooking, Intege
 
     @Query("SELECT tb FROM TripBooking tb")
     public List<TripBooking> findAllTripBooking();
-    public List<TripBooking> findAllByCustomerId(int customerId);
+//    public List<TripBooking> findAllByCustomerId(int customerId);
+
+    List<TripBooking> findAllByCustomer(Customer customer);
 }
