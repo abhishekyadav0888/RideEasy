@@ -14,6 +14,8 @@ public interface TripBookingService {
 
     public double calculateBill(int customerId) throws RideEasyException;
 
+    public List<TripBooking> getAllTripBooking(int customerid) throws RideEasyException;
+
 
 
 }

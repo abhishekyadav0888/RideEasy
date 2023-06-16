@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.rideeasy.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import com.rideeasy.model.Admin;
 import com.rideeasy.model.Customer;
 import com.rideeasy.model.TripBooking;
 import com.rideeasy.repository.AdminRepository;
-import com.rideeasy.repository.CustomerRepository;
+
 import com.rideeasy.repository.TripBookingRepository;
 
 import lombok.extern.slf4j.Slf4j;
