@@ -5,6 +5,7 @@ import com.rideeasy.model.Customer;
 import com.rideeasy.model.Driver;
 import com.rideeasy.model.TripBooking;
 import com.rideeasy.repository.CustomerRepository;
+import com.rideeasy.repository.DriverRepository;
 import com.rideeasy.repository.TripBookingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -24,8 +25,8 @@ public class TripBookingServiceImpl implements TripBookingService {
     @Autowired
     private TripBookingRepository tripBookingRepository;
 
-//    @Autowired
-//    private DriverRepository DriverRepository;
+    @Autowired
+    private DriverRepository DriverRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -53,21 +54,21 @@ public class TripBookingServiceImpl implements TripBookingService {
                 tripB.setCustomer(cust);
 
 
-//            List<Driver> driverlist = DriverRepository.findAll();
-//            Driver driver = null;
-//            for(int i = 0;i<driverlist.size();i++) {
-//                if(driverlist.get(i).getAvailablity() == true) {
-//                    driver = driverlist.get(i);
-//                    break;
-//                }
-//            }
-//
-//            if( driver == null ) throw new RideEasyException("No Driver Available at the moment");
-//
-//            tripB.setDriver(driver);
-//
-//            driver.getTripBookingList().add(tripB);
-//            driver.setAvailablity(false);
+            List<Driver> driverlist = DriverRepository.findAll();
+            Driver driver = null;
+            for(int i = 0;i<driverlist.size();i++) {
+                if(driverlist.get(i).getIsAvailable()) {
+                    driver = driverlist.get(i);
+                    break;
+                }
+            }
+
+            if( driver == null ) throw new RideEasyException("No Driver Available at the moment");
+
+            tripB.setDriver(driver);
+
+            driver.getTripBookings().add(tripB);
+            driver.setIsAvailable(false);
 
 
                 cust.getTripBookings().add(tripB);
@@ -83,7 +84,7 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
         catch (Exception e) {
             logger.error("Error occurred while inserting trip booking", e);
-            throw new RideEasyException("Failed to insert trip booking", e);
+            throw new RideEasyException("Failed to insert trip booking");
         }
     }
 
@@ -103,7 +104,7 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
         catch (Exception e) {
             logger.error("Error occurred while updating trip booking", e);
-            throw new RideEasyException("Failed to update trip booking", e);
+            throw new RideEasyException("Failed to update trip booking");
         }
     }
 
@@ -120,7 +121,7 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
         catch (Exception e) {
             logger.error("Error occurred while deleting trip booking", e);
-            throw new RideEasyException("Failed to delete trip booking", e);
+            throw new RideEasyException("Failed to delete trip booking");
         }
     }
 
@@ -135,7 +136,7 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
         catch (Exception e) {
             logger.error("Error occurred while retrieving trip bookings for customer with ID: {}", customerId, e);
-            throw new RideEasyException("Failed to retrieve trip bookings for customer", e);
+            throw new RideEasyException("Failed to retrieve trip bookings for customer");
         }
     }
 
@@ -146,11 +147,10 @@ public class TripBookingServiceImpl implements TripBookingService {
         try{
             List<TripBooking> tripBookings = tripBookingRepository.findAllByCustomerId(customerId);
 
-            // Sort the tripBookings by fromDateTime in descending order to get the last trip
             tripBookings.sort(Comparator.comparing(TripBooking::getFromDateTime).reversed());
 
             if (!tripBookings.isEmpty()) {
-                TripBooking lastTripBooking = tripBookings.get(0); // Get the first (last) trip booking
+                TripBooking lastTripBooking = tripBookings.get(0);
 
                 if (lastTripBooking.getStatus() != null && lastTripBooking.getStatus()) {
                     Float distance = lastTripBooking.getDistanceInKm();
@@ -166,7 +166,7 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
         catch (Exception e) {
             logger.error("Error occurred while calculating bill for customer with ID: {}", customerId, e);
-            throw new RideEasyException("Failed to calculate bill for customer", e);
+            throw new RideEasyException("Failed to calculate bill for customer");
         }
     }
 
