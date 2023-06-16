@@ -1,34 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
-    <title>RideEasy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+
+  <title>RideEasy</title>
 </head>
+
 <body>
-    <body>
-        <nav>
-            <div class="logo">
-              <img src="../assets/LogoNew.png" alt="Logo">
-            </div>
-            <div class="login">
-              <div class="dropdown">
-                <button class="dropbtn">Login</button>
-                <div class="dropdown-content">
-                  <a href="admin.html">Admin</a>
-                  <a href="customer.html">Customer</a>
-                  <a href="driver.html">Driver</a>
-                </div>
-              </div>
-            </div>
-          </nav>
 
-          <div id="container">
-            <h1>RideEasy Cab Booking Service</h1>
-          </div>
+  <nav>
+    <div class="logo">
+      <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
+    </div>
+    <div class="login">
+      <div class="dropdown">
+        <button class="dropbtn button-37">Login</button>
+        <div class="dropdown-content">
+          <a href="admin.html">Admin</a>
+          <a href="customer.html">Customer</a>
+          <a href="driver.html">Driver</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <script src="../scripts/script.js"></script>
+  <div id="container">
+    <h1>RideEasy Cab Booking Service</h1>
+  </div>
+  
+  <div class="carousel">
+    <div class="carousel-item">
+      <img src="image1.jpg" alt="Image 1">
+    </div>
+    <div class="carousel-item">
+      <img src="image2.jpg" alt="Image 2">
+    </div>
+    <div class="carousel-item">
+      <img src="image3.jpg" alt="Image 3">
+    </div>
+    <div class="carousel-item">
+      <img src="image4.jpg" alt="Image 4">
+    </div>
+    <div class="carousel-item">
+      <img src="image5.jpg" alt="Image 5">
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.carousel').slick({
+        autoplay: true,
+        autoplaySpeed: 2000,
+        dots: true,
+        arrows: false
+      });
+    });
+  </script>
+
 </body>
-</body>
+
 </html>
