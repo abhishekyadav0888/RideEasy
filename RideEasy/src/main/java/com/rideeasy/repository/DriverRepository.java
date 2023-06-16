@@ -15,6 +15,6 @@ public interface DriverRepository extends JpaRepository<Driver,Integer> , Paging
 
     public Optional<Driver> findByEmail(String email);
 
-    public List<Driver> findByRatingGreaterThanOrEqual(Float rating);
+    public List<Driver> findByRatingGreaterThanEqual(Float rating);
 
 }

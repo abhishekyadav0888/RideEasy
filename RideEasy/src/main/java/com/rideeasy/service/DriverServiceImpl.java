@@ -99,7 +99,7 @@ public class DriverServiceImpl implements DriverService{
     public List<Driver> viewBestDrivers() {
         log.info("Class: DriverServiceImpl, method: viewBestDrivers started ");
 
-        List<Driver> drivers= driverRepository.findByRatingGreaterThanOrEqual(4.5F);
+        List<Driver> drivers= driverRepository.findByRatingGreaterThanEqual(4.5F);
         if(drivers.isEmpty())
             throw new RideEasyException("No driver found");
         log.info("Class: DriverServiceImpl, method: viewBestDrivers ended ");
