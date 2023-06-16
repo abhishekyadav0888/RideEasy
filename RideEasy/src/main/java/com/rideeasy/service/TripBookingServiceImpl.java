@@ -170,4 +170,14 @@ public class TripBookingServiceImpl implements TripBookingService {
         }
     }
 
+
+    @Override
+    public List<TripBooking> getAllTripBooking(int customerid) throws RideEasyException {
+        Optional<Customer> opt = customerRepository.findById(customerid);
+        if (opt.isPresent()) {
+            List<TripBooking> trips = opt.get().getTripBookings();
+            return trips;
+        }
+        throw new RideEasyException("Invalid id");
+    }
 }

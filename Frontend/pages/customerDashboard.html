@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cab Booking Application - Customer Page</title>
+  <link rel="stylesheet" href="../styles/customerDashboard.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+          <img src="../assets/LogoNew.png" alt="Logo">
+        </div>
+        <div class="login">
+          <div class="dropdown">
+            <button class="dropbtn">Admin</button>
+            <div class="dropdown-content">
+              <a href="#">Add new admin</a>
+              <a href="#">Update admin</a>
+              <a href="#">Delete admin</a>
+              <a href="#">Get all trips</a>
+              <a href="#">Get trips cab wise</a>
+              <a href="#">Get trips customer wise</a>
+              <a href="#">Get trips by date range</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="sidebar">
+          <ul>
+            <li><a href="#" onclick="displayContent('update-customer')">Update Customer</a></li>
+            <li><a href="#" onclick="displayContent('insert-trip-booking')">Insert Trip Booking</a></li>
+            <li><a href="#" onclick="displayContent('update-trip-booking')">Update Trip Booking</a></li>
+            <li><a href="#" onclick="displayContent('delete-trip-booking')">Delete Trip Booking</a></li>
+            <li><a href="#" onclick="displayContent('calculate-bill')">Calculate Bill</a></li>
+          </ul>
+        </div>
+        <div class="content">
+          <h2>Welcome, Customer!</h2>
+          <p>Select an option from the sidebar to view the results.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="../scripts/customerDashboard.js"></script>
