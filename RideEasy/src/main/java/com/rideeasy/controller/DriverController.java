@@ -20,13 +20,13 @@ public class DriverController {
     @Autowired
     private DriverService driverService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/add")
     public ResponseEntity<Driver> addDriverHandler( @Valid @RequestBody Driver driver){
         log.info("Class: DriverController, method: addDriverHandler started");
-        driver.setPassword(passwordEncoder.encode(driver.getPassword()));
+//        driver.setPassword(passwordEncoder.encode(driver.getPassword()));
         Driver persistedDriver= driverService.insertDriver(driver);
         log.info("Class: DriverController, method: addDriverHandler returned "+ persistedDriver);
         return new ResponseEntity<>(persistedDriver, HttpStatus.ACCEPTED);
