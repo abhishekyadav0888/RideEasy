@@ -16,4 +16,6 @@ public interface DriverService {
 
     public Driver viewDriver(Integer driverId);
 
+    public Driver viewDriverByUserName(String userName);
+
 }

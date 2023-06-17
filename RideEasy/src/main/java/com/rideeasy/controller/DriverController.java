@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class DriverController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/hello")
+    public String testHandler(){
+        return "Welcome to Driver Handler spring security ";
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Driver> addDriverHandler( @Valid @RequestBody Driver driver){
@@ -58,6 +64,14 @@ public class DriverController {
         Driver driver= driverService.viewDriver(driverId);
         log.info("Class: DriverController, method: viewDriverByIdHandler returned "+driver);
         return new ResponseEntity<>(driver, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/signIn")
+    public ResponseEntity<String> getLoggedInDriverDetailsHandler(Authentication auth){
+        log.info("Class: DriverController, method: getLoggedInDriverDetailsHandler started");
+        Driver driver= driverService.viewDriverByUserName(auth.getName());
+        log.info("Class: DriverController, method: getLoggedInDriverDetailsHandler returned "+driver);
+        return new ResponseEntity<>(driver.getUserName()+" Logged in successfully", HttpStatus.OK);
     }
 
 }

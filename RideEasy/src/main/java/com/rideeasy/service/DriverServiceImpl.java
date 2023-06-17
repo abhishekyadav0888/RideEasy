@@ -1,5 +1,6 @@
 package com.rideeasy.service;
 
+import com.rideeasy.exception.NotFoundException;
 import com.rideeasy.exception.RideEasyException;
 import com.rideeasy.model.Driver;
 import com.rideeasy.repository.DriverRepository;
@@ -20,7 +21,7 @@ public class DriverServiceImpl implements DriverService{
 
     /**
      * @param driver
-     * @return driver
+     * @return Driver
      * Take a driver object to be persisted and return persisted driver;
      */
     @Override
@@ -53,7 +54,7 @@ public class DriverServiceImpl implements DriverService{
 
     /**
      * @param driver
-     * @return updatedDriver
+     * @return Driver
      * Take a driver object to be updated, return updated driver;
      */
     @Override
@@ -75,7 +76,7 @@ public class DriverServiceImpl implements DriverService{
 
     /**
      * @param driverId
-     * @return deletedDriver
+     * @return Driver
      * Take driver id of Integet type, return deletedDriver;
      */
     @Override
@@ -108,7 +109,7 @@ public class DriverServiceImpl implements DriverService{
 
     /**
      * @param driverId
-     * @return driver
+     * @return Driver
      * Take driver id of integer type, returns driver;
      */
     @Override
@@ -118,5 +119,16 @@ public class DriverServiceImpl implements DriverService{
         log.info("Class: DriverServiceImpl, method: viewDriver returned "+driver);
         return driver;
     }
+
+    /**
+     * @param userName
+     * @return Driver
+     */
+    @Override
+    public Driver viewDriverByUserName(String userName) {
+        Driver driver= driverRepository.findByUserName(userName).orElseThrow(()-> new NotFoundException(" Driver not found"));
+        return driver;
+    }
+
 
 }
