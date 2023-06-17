@@ -39,7 +39,5 @@ public abstract class AbstractUser {
     @Column(unique = true)
     private String email;
 
-    private String role;
-
     private Boolean isDeleted = false;
 }
