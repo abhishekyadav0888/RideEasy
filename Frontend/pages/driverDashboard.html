@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cab Booking Application - Driver Page</title>
+  <link rel="stylesheet" href="../styles/driverDashboard.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+          <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
+        </div>
+        <div class="login">
+          <button class="admin-btn" onclick="confirmLogout()">Welcome, Admin</button>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="sidebar">
+          <ul>
+            <li><a href="#" onclick="displayContent('insert-cab')">Insert Cab</a></li>
+            <li><a href="#" onclick="displayContent('delete-cab')">Delete Cab</a></li>
+            <li><a href="#" onclick="displayContent('view-cab')">View Cab</a></li>
+            <li><a href="#" onclick="displayContent('view-cab-by-type')">View Cab by Type</a></li>
+            <li><a href="#" onclick="displayContent('count-cab-by-type')">Count Cab by Type</a></li>
+            <li><button class="button-24" role="button" id="logout-button">Logout</button></li>
+          </ul>
+        </div>
+        <div class="content">
+          <h2>Welcome, Driver!</h2>
+          <p>Select an option from the sidebar to view the results.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="../scripts/driverDashboard.js"></script>
