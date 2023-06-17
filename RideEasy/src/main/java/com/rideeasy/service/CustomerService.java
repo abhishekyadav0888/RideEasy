@@ -17,4 +17,6 @@ public interface CustomerService {
     public Customer validateCustomer(String username,String password);
 
     public Customer unBlockCustomer(Integer customerId);
+
+    public Customer getCustomerByUsername(String username);
 }

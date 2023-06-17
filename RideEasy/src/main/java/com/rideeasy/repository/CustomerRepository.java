@@ -15,4 +15,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Query("Select c from Customer c where c.isDeleted=false")
     public List<Customer> getAllCustomers();
+
+
 }

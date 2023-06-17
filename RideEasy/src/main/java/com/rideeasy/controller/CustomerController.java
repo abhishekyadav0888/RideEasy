@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +18,21 @@ import java.util.List;
 @Slf4j
 public class CustomerController {
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/customers/hello")
+    public String helloMethodFromCustomerCont(){
+        return "Hello from Customer Controller";
+    }
 
 
     @PostMapping("/customers")
     public ResponseEntity<Customer> addNewCustomer(@Valid @RequestBody Customer customer){
         log.info("Try to add new Customer : CustomerController");
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         Customer savedCustomer = customerService.addNewCustomer(customer);
         log.info("Customer added successful : CustomerController");
         return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
@@ -75,6 +86,12 @@ public class CustomerController {
         return new ResponseEntity<>(unBlockCustomer,HttpStatus.OK);
     }
 
-
+    @GetMapping("/signIn")
+    public ResponseEntity<String> getLoggedInCustomerDetailsHandler(Authentication auth){
+        log.info("Class: Customer Controller, method: getLoggedInCustomerDetailsHandler  started");
+        Customer customer = customerService.getCustomerByUsername(auth.getName());
+        log.info("Class: Customer Controller, method:  returned "+customer);
+        return new ResponseEntity<>(customer.getUserName()+" Logged in Successfully", HttpStatus.FOUND);
+    }
 
 }
