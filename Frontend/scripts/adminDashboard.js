@@ -314,12 +314,12 @@ function logoutAdmin(){
   window.location.href = 'index.html';
 }
 
-// Function to update the dropdown button text with the admin name
-function updateDropdownText(adminName) {
-  const dropdownButton = document.getElementById("admin-dropdown");
-  dropdownButton.textContent = "Welcome, " + adminName;
-}
+// // Function to update the dropdown button text with the admin name
+// function updateDropdownText(adminName) {
+//   const dropdownButton = document.getElementById("admin-dropdown");
+//   dropdownButton.textContent = "Welcome, " + adminName;
+// }
 
-// Call the updateDropdownText function with the admin name after successful login
-const adminName = "John Doe"; // Replace with the actual admin name
-updateDropdownText(adminName);
+// // Call the updateDropdownText function with the admin name after successful login
+// const adminName = "John Doe"; // Replace with the actual admin name
+// updateDropdownText(adminName);
