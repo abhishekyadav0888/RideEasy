@@ -1,76 +1,86 @@
 
 // Function to display the selected content
 function displayContent(option) {
-    const content = document.querySelector('.content');
+  const content = document.querySelector('.content');
 
-    // Clear previous content
-    content.innerHTML = '';
+  // Clear previous content
+  content.innerHTML = '';
 
-    // Render the selected content
-    switch (option) {
-        case 'update-customer':
-            content.innerHTML = `
-          <h2>Update customer</h2>
-          <form>
-            <label for="customerName">Customer Name</label>
-            <input type="text" id="customerName" name="customerName">
-            <label for="customerEmail">Email</label>
-            <input type="email" id="customerEmail" name="customerEmail">
-            <button type="submit">Update</button>
-          </form>
-        `;
-            break;
-        case 'insert-trip-booking':
-            content.innerHTML = `
-          <h2>Insert trip booking</h2>
-          <form>
-            <label for="fromLocation">From Location</label>
-            <input type="text" id="fromLocation" name="fromLocation">
-            <label for="toLocation">To Location</label>
-            <input type="text" id="toLocation" name="toLocation">
-            <label for="bookingDate">Booking Date</label>
-            <input type="date" id="bookingDate" name="bookingDate">
-            <button type="submit">Book Trip</button>
-          </form>
-        `;
-            break;
-        case 'update-trip-booking':
-            content.innerHTML = `
-          <h2>Update trip booking</h2>
-          <form>
-            <label for="bookingId">Booking ID</label>
-            <input type="text" id="bookingId" name="bookingId">
-            <label for="newFromLocation">New From Location</label>
-            <input type="text" id="newFromLocation" name="newFromLocation">
-            <label for="newToLocation">New To Location</label>
-            <input type="text" id="newToLocation" name="newToLocation">
-            <button type="submit">Update Booking</button>
-          </form>
-        `;
-            break;
-        case 'delete-trip-booking':
-            content.innerHTML = `
-          <h2>Delete trip booking</h2>
-          <form>
-            <label for="bookingId">Booking ID</label>
-            <input type="text" id="bookingId" name="bookingId">
-            <button type="submit">Delete Booking</button>
-          </form>
-        `;
-            break;
-        case 'calculate-bill':
-            content.innerHTML = `
-          <h2>Calculate bill</h2>
-          <form>
-            <label for="bookingId">Booking ID</label>
-            <input type="text" id="bookingId" name="bookingId">
-            <button type="submit">Calculate</button>
-          </form>
-        `;
-            break;
-        default:
-            content.innerHTML = '<h2>Welcome, Customer!</h2><p>Select an option from the sidebar to view the results.</p>';
-    }
+  // Render the selected content
+  switch (option) {
+      case 'update-customer':
+          content.innerHTML = `
+              <h2>Update customer</h2>
+              <form>
+                  <label for="customerName">Customer Name</label>
+                  <input type="text" id="customerName" name="customerName">
+                  <label for="customerEmail">Email</label>
+                  <input type="email" id="customerEmail" name="customerEmail">
+                  <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Update</button>
+              </form>
+          `;
+          break;
+      case 'insert-trip-booking':
+          content.innerHTML = `
+              <h2>Insert trip booking</h2>
+              <form>
+                  <label for="fromLocation">From Location</label>
+                  <input type="text" id="fromLocation" name="fromLocation">
+                  <label for="toLocation">To Location</label>
+                  <input type="text" id="toLocation" name="toLocation">
+                  <label for="bookingDate">Booking Date</label>
+                  <input type="date" id="bookingDate" name="bookingDate">
+                  <label for="passengerCount">Passenger Count</label>
+                  <input type="number" id="passengerCount" name="passengerCount">
+                  <label for="luggageCount">Luggage Count</label>
+                  <input type="number" id="luggageCount" name="luggageCount">
+                  <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Book Trip</button>
+              </form>
+          `;
+          break;
+      case 'update-trip-booking':
+          content.innerHTML = `
+              <h2>Update trip booking</h2>
+              <form>
+                  <label for="bookingId">Booking ID</label>
+                  <input type="text" id="bookingId" name="bookingId">
+                  <label for="newFromLocation">New From Location</label>
+                  <input type="text" id="newFromLocation" name="newFromLocation">
+                  <label for="newToLocation">New To Location</label>
+                  <input type="text" id="newToLocation" name="newToLocation">
+                  <label for="newBookingDate">New Booking Date</label>
+                  <input type="date" id="newBookingDate" name="newBookingDate">
+                  <label for="newPassengerCount">New Passenger Count</label>
+                  <input type="number" id="newPassengerCount" name="newPassengerCount">
+                  <label for="newLuggageCount">New Luggage Count</label>
+                  <input type="number" id="newLuggageCount" name="newLuggageCount">
+                  <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Update Booking</button>
+              </form>
+          `;
+          break;
+      case 'delete-trip-booking':
+          content.innerHTML = `
+              <h2>Delete trip booking</h2>
+              <form>
+                  <label for="bookingId">Booking ID</label>
+                  <input type="text" id="bookingId" name="bookingId">
+                  <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Delete Booking</button>
+              </form>
+          `;
+          break;
+      case 'calculate-bill':
+          content.innerHTML = `
+              <h2>Calculate bill</h2>
+              <form>
+                  <label for="bookingId">Booking ID</label>
+                  <input type="text" id="bookingId" name="bookingId">
+                  <button type="submit">Calculate</button>
+              </form>
+          `;
+          break;
+      default:
+          content.innerHTML = '<h2>Welcome, Customer!</h2><p>Select an option from the sidebar to view the results.</p>';
+  }
 }
 
 // Functions for form submissions
@@ -127,4 +137,16 @@ function deleteTripBooking(event) {
 function calculateBill(event) {
     event.preventDefault();
     // Handle calculate bill logic here
+}
+
+
+document.getElementById("logout-button").addEventListener("click", confirmLogout);
+
+function confirmLogout() {
+  if (confirm("Are you sure you want to logout?")) {
+    logoutCustomer();
+  }
+} 
+function logoutCustomer(){
+  window.location.href = 'index.html';
 }

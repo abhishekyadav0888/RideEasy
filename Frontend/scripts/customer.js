@@ -1,3 +1,7 @@
+function loginCustomer(){
+  window.location.href = 'customerDashboard.html';
+}
+
 // Function to handle successful login
 function handleSuccessfulLogin() {
     const loginButton = document.querySelector('.login .dropbtn');

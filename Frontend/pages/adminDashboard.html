@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Cab Booking Application - Admin Page</title>
   <link rel="stylesheet" href="../styles/adminDashboard.css">
 </head>
+
 <body>
   <nav>
     <div class="logo">
-      <img src="../assets/LogoNew.png" alt="Logo">
+      <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
     </div>
     <div class="login">
-      <div class="dropdown">
-        <button class="dropbtn">Admin</button>
-        <div class="dropdown-content">
-          <a href="#">Add new admin</a>
-          <a href="#">Update admin</a>
-          <a href="#">Delete admin</a>
-          <a href="#">Get all trips</a>
-          <a href="#">Get trips cab wise</a>
-          <a href="#">Get trips customer wise</a>
-          <a href="#">Get trips by date range</a>
-        </div>
-      </div>
+      <button class="admin-btn" onclick="confirmLogout()">Welcome, Admin</button>
     </div>
   </nav>
 
@@ -35,16 +26,18 @@
         <li><a href="#" onclick="displayContent('get-trips-cab-wise')">Get trips cab wise</a></li>
         <li><a href="#" onclick="displayContent('get-trips-customer-wise')">Get trips customer wise</a></li>
         <li><a href="#" onclick="displayContent('get-trips-by-date')">Get trips by date range</a></li>
+        <li><button class="button-24" role="button" id="logout-button">Logout</button></li>
       </ul>
-      <button id="logout-button" onclick="logout()">Logout</button>
     </div>
     <div class="content">
       <h2>Welcome, Admin!</h2>
       <p>Select an option from the sidebar to view the results.</p>
     </div>
   </div>
-  
+
 
   <script src="../scripts/adminDashboard.js"></script>
 </body>
+
 </html>
+

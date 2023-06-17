@@ -7,21 +7,10 @@
 <body>
     <nav>
         <div class="logo">
-          <img src="../assets/LogoNew.png" alt="Logo">
+          <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
         </div>
         <div class="login">
-          <div class="dropdown">
-            <button class="dropbtn">Admin</button>
-            <div class="dropdown-content">
-              <a href="#">Add new admin</a>
-              <a href="#">Update admin</a>
-              <a href="#">Delete admin</a>
-              <a href="#">Get all trips</a>
-              <a href="#">Get trips cab wise</a>
-              <a href="#">Get trips customer wise</a>
-              <a href="#">Get trips by date range</a>
-            </div>
-          </div>
+          <button class="admin-btn" onclick="confirmLogout()">Welcome, Admin</button>
         </div>
       </nav>
       <div class="container">
@@ -32,6 +21,7 @@
             <li><a href="#" onclick="displayContent('update-trip-booking')">Update Trip Booking</a></li>
             <li><a href="#" onclick="displayContent('delete-trip-booking')">Delete Trip Booking</a></li>
             <li><a href="#" onclick="displayContent('calculate-bill')">Calculate Bill</a></li>
+            <li><button class="button-24" role="button" id="logout-button">Logout</button></li>
           </ul>
         </div>
         <div class="content">

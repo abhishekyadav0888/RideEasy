@@ -8,57 +8,89 @@ function displayContent(option) {
   // Render the selected content
   switch (option) {
     case 'add-admin':
-      content.innerHTML = '<h2>Add new admin</h2><p>Add new admin form goes here...</p>';
+      content.innerHTML = `
+        <h2 style = "text-align : center">Add new admin</h2>
+        <form style="width: 60% ;gap : 10px; margin: 10px auto ; display: flex; flex-direction: column;">
+          <label for="adminName">Admin Name</label>
+          <input type="text" id="adminName" name="adminName">
+          <label for="adminEmail">Admin Email</label>
+          <input type="email" id="adminEmail" name="adminEmail">
+          <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Add Admin</button>
+        </form>
+      `;
       break;
     case 'update-admin':
-      content.innerHTML = '<h2>Update admin</h2><p>Update admin form goes here...</p>';
+      content.innerHTML = `
+        <h2 style = "text-align : center">Update admin</h2>
+        <form style="width: 60% ;gap : 10px; margin: 10px auto ; display: flex; flex-direction: column;">
+          <label for="adminId">Admin ID</label>
+          <input type="text" id="adminId" name="adminId">
+          <label for="adminName">New Admin Name</label>
+          <input type="text" id="adminName" name="adminName">
+          <label for="adminEmail">New Admin Email</label>
+          <input type="email" id="adminEmail" name="adminEmail">
+          <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Update Admin</button>
+        </form>
+      `;
       break;
     case 'delete-admin':
-      content.innerHTML = '<h2>Delete admin</h2><p>Delete admin form goes here...</p>';
+      content.innerHTML = `
+        <h2 style = "text-align : center">Delete admin</h2>
+        <form style="width: 60% ;gap : 10px; margin: 10px auto ; display: flex; flex-direction: column;">
+          <label for="adminId">Admin ID</label>
+          <input type="text" id="adminId" name="adminId">
+          <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Delete Admin</button>
+        </form>
+      `;
       break;
     case 'get-all-trips':
-      content.innerHTML = '<h2>List of All Trips</h2>';
+      content.innerHTML = '<h2 style = "text-align : center">List of All Trips</h2>';
       getAllTrips(); // Invoke the getAllTrips() function
       break;
     case 'get-trips-cab-wise':
       content.innerHTML = `
-        <h2>Get trips cab wise</h2>
-        <div>
+        <h2 style = "text-align : center">Get trips cab wise</h2>
+        <div style="width: 60% ;gap : 10px; margin: 10px auto ; display: flex; flex-direction: column;">
           <label for="cabId">Enter Cab ID: </label>
           <input type="text" id="cabId" />
-          <button onclick="getAllTripsCabwise()">Get Trips</button>
+          <button onclick="getAllTripsCabwise()" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Get Trips</button>
         </div>
         <div id="tripTable"></div>
       `;
       break;
     case 'get-trips-customer-wise':
       content.innerHTML = `
-        <h2>Get trips customer wise</h2>
-        <div>
+        <h2 style = "text-align : center">Get trips customer wise</h2>
+        <div style="width: 60% ;gap : 10px; margin: 10px auto ; display: flex; flex-direction: column;">
           <label for="customerId">Enter Customer ID: </label>
           <input type="text" id="customerId" />
-          <button onclick="getAllTripsCustomerWise()">Get Trips</button>
+          <button onclick="getAllTripsCustomerWise()" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Get Trips</button>
         </div>
         <div id="tripTable"></div>
       `;
       break;
     case 'get-trips-by-date':
       content.innerHTML = `
-        <h2>Get trips by date range</h2>
-        <div>
-          <label for="startDate">Start Date: </label>
-          <input type="date" id="startDate" />
-        </div>
-        <div>
-          <label for="endDate">End Date: </label>
-          <input type="date" id="endDate" />
-          <button onclick="getTripsByDate()">Get Trips</button>
-        </div>
-        <div id="tripTable"></div>
-      `;
+          <h2 style = "text-align : center">Get trips by date range</h2>
+          <div style="width: 60% ;gap : 10px; font-size: 23px; display: flex; flex-direction: column; align-items: center; margin: 10px auto;">
+            <div>
+              <label for="startDate">Start Date: </label>
+              <input type="date" id="startDate" />
+            </div>
+            <div>
+              <label for="endDate">End Date: </label>
+              <input type="date" id="endDate" />
+            </div>
+            <div>
+              <button onclick="getTripsByDate()" style="font-size: 23px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Get Trips</button>
+            </div>
+          </div>
+          
+          <div id="tripTable"></div>
+        `;
       break;
     default:
-      content.innerHTML = '<h2>Welcome, Admin!</h2><p>Select an option from the sidebar to view the results.</p>';
+      content.innerHTML = '<h2 style = "text-align : center">Welcome, Admin!</h2><p>Select an option from the sidebar to view the results.</p>';
   }
 }
 
@@ -272,5 +304,22 @@ function getAllTripsCustomerWise() {
   const content = document.querySelector('.content');
   content.appendChild(table);
 }
+document.getElementById("logout-button").addEventListener("click", confirmLogout);
+function confirmLogout() {
+  if (confirm("Are you sure you want to logout?")) {
+    logoutAdmin();
+  }
+} 
+function logoutAdmin(){
+  window.location.href = 'index.html';
+}
 
+// Function to update the dropdown button text with the admin name
+function updateDropdownText(adminName) {
+  const dropdownButton = document.getElementById("admin-dropdown");
+  dropdownButton.textContent = "Welcome, " + adminName;
+}
 
+// Call the updateDropdownText function with the admin name after successful login
+const adminName = "John Doe"; // Replace with the actual admin name
+updateDropdownText(adminName);
