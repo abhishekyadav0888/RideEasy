@@ -111,4 +111,20 @@ public class CustomerServiceImpl implements CustomerService{
             throw new InvalidInputException("Invalid Customer Id");
         }
     }
+
+    @Override
+    public Customer getCustomerByUsername(String username) {
+        Optional<Customer> opt = customerRepository.findByuserName(username);
+        if(opt.isPresent()){
+            Customer customer = opt.get();
+            customerRepository.save(customer);
+            log.info("Un Block Customer successful : CustomerService");
+            if(customer.getIsDeleted()==true){
+                throw new NotFoundException("User is Blocked");
+            }
+            return customer;
+        }else {
+            throw new InvalidInputException("Invalid Customer Username");
+        }
+    }
 }
