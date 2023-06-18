@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
         MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), ie.getMessage(), req.getDescription(false));
 
-        ResponseEntity<MyErrorDetails> re=new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+        ResponseEntity<MyErrorDetails> re=new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
 
         return re;
     }

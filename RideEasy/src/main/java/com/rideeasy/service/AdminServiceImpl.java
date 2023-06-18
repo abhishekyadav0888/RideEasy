@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public Admin insertAdmin(Admin admin) throws InvalidInputException {
+
 		if(admin==null) {
 			log.warn("Admin data is null.");
 			throw new InvalidInputException("Data of admin is null.");
