@@ -1,47 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/driverStyle.css">
-    <title>Driver Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/driverStyle.css">
+  <title>Driver Login</title>
 </head>
+
 <body>
-    <nav>
-      <div class="logo">
-        <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
-      </div>
-      <div class="login">
-        <div class="dropdown">
-          <button class="dropbtn button-37">Login</button>
-          <div class="dropdown-content">
-            <a href="admin.html">Admin</a>
-            <a href="customer.html">Customer</a>
-            <a href="driver.html">Driver</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  
-    <div class="container">
-      <form class="login-form" id="login-form">
-        <h2>Driver Login</h2>
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <div class="form-group">
-          <label for="remember">Remember me:</label>
-          <input type="checkbox" id="remember" name="remember">
-        </div>
-        <button type="submit" onclick="loginDriver()">Login</button>
-      </form>
+  <nav>
+    <div class="logo">
+      <img id="nav-logo-img" src="../assets/NewLogo.png" alt="Logo">
     </div>
-  
-    <script src="../scripts/driver.js"></script>
-  </body>
-  </html>
+    <div class="login">
+      <div class="dropdown">
+        <button class="dropbtn button-37">Login</button>
+        <div class="dropdown-content">
+          <a href="admin.html">Admin</a>
+          <a href="customer.html">Customer</a>
+          <a href="driver.html">Driver</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <form class="login-form" id="login-form">
+      <h2>Driver Login</h2>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="remember">Remember me:</label>
+        <input type="checkbox" id="remember" name="remember">
+      </div>
+      <button type="submit" onclick="loginDriver()">Login</button>
+    </form>
+
+    <form class="signup-form" id="signup-form">
+      <h2>Driver Signup</h2>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" name="mobile" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="license">License Number:</label>
+        <input type="text" id="license" name="license" required>
+      </div>
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" required>
+      </div>
+      <button type="submit" onclick="signupDriver()">Signup</button>
+    </form>
+  </div>
+
+  <script src="../scripts/driver.js"></script>
+</body>
+
+</html>
