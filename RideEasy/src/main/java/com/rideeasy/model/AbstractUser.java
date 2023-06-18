@@ -19,7 +19,7 @@ public abstract class AbstractUser {
     @Size(min = 2,max = 25,message = "Name length Between 2 and 25 character")
     private String name;
 
-    @NotNull(message = "User Name can not be null")
+    @NotNull(message = "User Name can not be null testing here")
     @NotBlank(message = "Username can not be Blank")
     @Size(min = 3,max = 10,message = "Username length Between 3 and 10 character")
     @Column(unique = true)
@@ -27,7 +27,7 @@ public abstract class AbstractUser {
     private String userName;
     @NotNull(message = "Password can not be null")
     @NotBlank(message = "Password can not be Blank")
-    @Size(min = 4,max = 10,message = "Password length Between 4 and 10 character")
+    @Size(min = 4,message = "Password length more than 4 characters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @NotNull(message = "address can not be null")
