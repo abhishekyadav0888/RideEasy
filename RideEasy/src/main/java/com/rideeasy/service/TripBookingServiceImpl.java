@@ -32,10 +32,10 @@ public class TripBookingServiceImpl implements TripBookingService {
     private CustomerRepository customerRepository;
 
     @Override
-    public TripBooking insertTripBooking(TripBooking tripBooking) throws RideEasyException {
+    public TripBooking insertTripBooking(TripBooking tripBooking ,Integer customerId) throws RideEasyException {
         logger.info("Inserting trip booking: {}", tripBooking);
         try{
-            Optional<Customer> customer = customerRepository.findById(tripBooking.getCustomer().getCustomerId());
+            Optional<Customer> customer = customerRepository.findById(customerId);
 
             if (customer.isPresent()) {
                 Customer cust = customer.get();
@@ -51,6 +51,8 @@ public class TripBookingServiceImpl implements TripBookingService {
                 float distance = (float) Math.floor(Math.random() * (max - min + 1) + min);
                 tripB.setDistanceInKm(distance);
 
+                Float billAmount=  calculateBill(customerId);
+                tripB.setBill(billAmount);
                 tripB.setCustomer(cust);
 
 
@@ -109,7 +111,7 @@ public class TripBookingServiceImpl implements TripBookingService {
     }
 
     @Override
-    public TripBooking deleteTripBooking(int tripBookingId) throws RideEasyException {
+    public TripBooking deleteTripBooking(Integer tripBookingId) throws RideEasyException {
         logger.info("Deleting trip booking with ID: {}", tripBookingId);
 
         try{
@@ -126,7 +128,7 @@ public class TripBookingServiceImpl implements TripBookingService {
     }
 
     @Override
-    public List<TripBooking> viewAllTripsCustomer(int customerId) throws RideEasyException {
+    public List<TripBooking> viewAllTripsCustomer(Integer customerId) throws RideEasyException {
         logger.info("Retrieving all trip bookings for customer with ID: {}", customerId);
         try{
             Customer customer = customerRepository.findById(customerId)
@@ -141,7 +143,7 @@ public class TripBookingServiceImpl implements TripBookingService {
     }
 
     @Override
-    public double calculateBill(int customerId) throws RideEasyException {
+    public float calculateBill(Integer customerId) throws RideEasyException {
         logger.info("Calculating bill for customer with ID: {}", customerId);
 
         try{
@@ -161,11 +163,11 @@ public class TripBookingServiceImpl implements TripBookingService {
                     double tripBill = distance * perKmRate;
                     logger.info("Bill calculated successfully for the last trip of customer with ID {}: {}", customerId, tripBill);
 
-                    return tripBill;
+                    return (float) tripBill;
                 }
             }
             logger.warn("No completed trip found for customer with ID: {}", customerId);
-            return 0.0;
+            return 0.0F;
         }
         catch (Exception e) {
             logger.error("Error occurred while calculating bill for customer with ID: {}", customerId, e);
@@ -175,7 +177,7 @@ public class TripBookingServiceImpl implements TripBookingService {
 
 
     @Override
-    public List<TripBooking> getAllTripBooking(int customerid) throws RideEasyException {
+    public List<TripBooking> getAllTripBooking(Integer customerid) throws RideEasyException {
         Optional<Customer> opt = customerRepository.findById(customerid);
         if (opt.isPresent()) {
             List<TripBooking> trips = opt.get().getTripBookings();
