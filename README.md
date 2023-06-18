@@ -111,10 +111,11 @@
  
 ### E-R Diagram Of Bus Application
 
-```
-![ERDaigram](https://github.com/abhishekyadav0888/able-laborer-3546/assets/111178057/edb1d091-e356-4bc9-8ccc-8ee4ed15ee59)
 
-```
+![ERDaigram](https://github.com/abhishekyadav0888/able-laborer-3546/assets/111178057/aac5420a-b0cb-4591-86c4-0c530b78fc7d)
+
+
+
 
 ### Swagger UI
 
