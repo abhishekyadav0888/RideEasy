@@ -14,6 +14,10 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public abstract class AbstractUser {
 
+    @NotNull(message = "Name can not be null")
+    @NotBlank(message = "Name can not be Blank")
+    @Size(min = 2,max = 25,message = "Name length Between 2 and 25 character")
+    private String name;
 
     @NotNull(message = "User Name can not be null")
     @NotBlank(message = "Username can not be Blank")
