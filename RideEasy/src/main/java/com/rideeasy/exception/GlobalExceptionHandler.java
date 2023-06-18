@@ -50,16 +50,7 @@ public class GlobalExceptionHandler {
 
 
 
-    //to handle generic any type of Exception
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<MyErrorDetails> myExceptionHandler(Exception e,WebRequest req)  {
 
-
-        MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), e.getMessage(), req.getDescription(false));
-
-        return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
-
-    }
 
     //to handle Not found exception
     @ExceptionHandler(NoHandlerFoundException.class)
@@ -79,6 +70,17 @@ public class GlobalExceptionHandler {
 
 
         MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(),"Validation Error",me.getBindingResult().getFieldError().getDefaultMessage());
+
+        return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
+
+    }
+
+    //to handle generic any type of Exception
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<MyErrorDetails> myExceptionHandler(Exception e,WebRequest req)  {
+
+
+        MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), e.getMessage(), req.getDescription(false));
 
         return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
 

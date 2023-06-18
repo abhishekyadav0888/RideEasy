@@ -19,20 +19,20 @@ public class TripBookingController {
     private TripBookingService tripBookingService;
 
 
-    @PostMapping
-    public ResponseEntity<TripBooking> insertTripBooking(@Valid @RequestBody TripBooking tripBooking) {
+    @PostMapping("/{customerId}")
+    public ResponseEntity<TripBooking> insertTripBooking(@Valid @RequestBody TripBooking tripBooking , @PathVariable("customerId") Integer customerId) {
         try {
-            TripBooking createdTripBooking = tripBookingService.insertTripBooking(tripBooking);
+            TripBooking createdTripBooking = tripBookingService.insertTripBooking(tripBooking,customerId);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdTripBooking);
         } catch (RideEasyException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
-    @PutMapping("/{tripBookingId}")
+    @PutMapping
     public ResponseEntity<TripBooking> updateTripBooking(
-            @PathVariable("tripBookingId") int tripBookingId, @Valid @RequestBody TripBooking tripBooking) {
-        tripBooking.setTripBookingId(tripBookingId);
+              @Valid @RequestBody TripBooking tripBooking) {
+//        tripBooking.setTripBookingId(tripBooking);
         try {
             TripBooking updatedTripBooking = tripBookingService.updateTripBooking(tripBooking);
             return ResponseEntity.ok(updatedTripBooking);
@@ -62,7 +62,7 @@ public class TripBookingController {
     }
 
     @GetMapping("/customer/{customerId}/calculate-bill")
-    public ResponseEntity<Double> calculateBill(@PathVariable("customerId") int customerId) {
+    public ResponseEntity<Double> calculateBill(@PathVariable("customerId") Integer customerId) {
         try {
             double billAmount = tripBookingService.calculateBill(customerId);
             return ResponseEntity.ok(billAmount);

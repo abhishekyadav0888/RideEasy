@@ -1,6 +1,16 @@
 package com.rideeasy.appconfig;
 
-import com.rideeasy.exception.RideEasyException;
+import java.io.IOException;
+import javax.crypto.SecretKey;
+
+import com.rideeasy.appconfig.SecurityConstants;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -8,60 +18,59 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.crypto.SecretKey;
-import java.io.IOException;
 
 public class JwtTokenValidatorFilter extends OncePerRequestFilter {
-    /**
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
-     */
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-        System.out.println("inside Jwt token validator filter ");
-
+        System.out.println("1");
         String jwt= request.getHeader(SecurityConstants.JWT_HEADER);
 
-        if(jwt!=null){
+
+        if(jwt != null) {
+
             try {
-                //extracting the word Bearer with space;
-                jwt= jwt.substring(7);
+
+                //extracting the word Bearer
+                jwt = jwt.substring(7);
+
 
                 SecretKey key= Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
-                Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+                Claims claims= Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
-                String username = String.valueOf(claims.get("username"));
-                String authorities = (String) claims.get("authorities");
+                String username= String.valueOf(claims.get("username"));
 
-                Authentication authentication= new UsernamePasswordAuthenticationToken(username,null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
+                String authorities= (String)claims.get("authorities");
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                Authentication auth = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 
-            }catch (Exception ex){
-                throw new RideEasyException("Invalid token ");
+                SecurityContextHolder.getContext().setAuthentication(auth);
+
+                System.out.println("2");
+
+            } catch (Exception e) {
+                throw new BadCredentialsException("Invalid Token received..");
             }
-        }
-        else {
-            throw new RideEasyException("No Authority Header found ");
+
         }
 
-        filterChain.doFilter(request,response);
+        System.out.println("3");
+        filterChain.doFilter(request, response);
 
     }
+
+
+
+    //this time this validation filter has to be executed for all the apis except the /signIn api
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+
         return request.getServletPath().equals("/signIn");
     }
+
 }
+

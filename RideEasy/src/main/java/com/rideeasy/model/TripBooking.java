@@ -1,5 +1,6 @@
 package com.rideeasy.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -26,24 +27,26 @@ public class TripBooking {
     private String toLocation;
 
     @NotNull(message = "Starting Date and Time can not be null")
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fromDateTime;
 
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @NotNull(message = "Ending Date and Time can not be null")
     private LocalDateTime toDateTime;
 
     private Boolean status;
 
-    @NotNull(message = "Distance can not be null")
+//    @NotNull(message = "Distance can not be null")
     private Float distanceInKm;
 
     private Float bill;
 
     //RelationShip Start
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Driver driver;
 
 
