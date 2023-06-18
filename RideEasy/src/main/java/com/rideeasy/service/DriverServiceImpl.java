@@ -85,7 +85,7 @@ public class DriverServiceImpl implements DriverService{
 
         Optional<Driver> opt= driverRepository.findById(driverId);
         if(opt.isEmpty())
-            throw new RideEasyException("Driver with id: "+driverId+ "does not exist.");
+            throw new NotFoundException("Driver with id: "+driverId+ "does not exist.");
 
         driverRepository.deleteById(driverId);
         log.info("Class: DriverServiceImpl, method: deleteDriver returned deleted driver");
@@ -102,7 +102,7 @@ public class DriverServiceImpl implements DriverService{
 
         List<Driver> drivers= driverRepository.findByRatingGreaterThanEqual(4.5F);
         if(drivers.isEmpty())
-            throw new RideEasyException("No driver found");
+            throw new NotFoundException("No driver found");
         log.info("Class: DriverServiceImpl, method: viewBestDrivers ended ");
         return drivers;
     }
@@ -115,7 +115,7 @@ public class DriverServiceImpl implements DriverService{
     @Override
     public Driver viewDriver(Integer driverId) {
         log.info("Class: DriverServiceImpl, method: viewDriver started ");
-        Driver driver= driverRepository.findById(driverId).orElseThrow(()-> new RideEasyException("driver with id: "+driverId+" not found"));
+        Driver driver= driverRepository.findById(driverId).orElseThrow(()-> new NotFoundException("driver with id: "+driverId+" not found"));
         log.info("Class: DriverServiceImpl, method: viewDriver returned "+driver);
         return driver;
     }

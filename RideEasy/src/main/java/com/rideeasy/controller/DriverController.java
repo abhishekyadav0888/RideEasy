@@ -71,7 +71,7 @@ public class DriverController {
         log.info("Class: DriverController, method: getLoggedInDriverDetailsHandler started");
         Driver driver= driverService.viewDriverByUserName(auth.getName());
         log.info("Class: DriverController, method: getLoggedInDriverDetailsHandler returned "+driver);
-        return new ResponseEntity<>(driver.getUserName()+" Logged in successfully", HttpStatus.OK);
+        return new ResponseEntity<>(driver.getName()+" Logged in successfully", HttpStatus.OK);
     }
 
 }

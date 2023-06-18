@@ -23,35 +23,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain springSecurityConfiguration(HttpSecurity http) throws Exception{
 
-        http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.cors(cors -> {
+        http
+//                .cors(cors -> {
+//
+//            cors.configurationSource(new CorsConfigurationSource() {
+//
+//                @Override
+//                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+//                    CorsConfiguration cfg = new CorsConfiguration();
+//
+//                    cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
+//                    cfg.setAllowedMethods(Collections.singletonList("*"));
+//                    cfg.setAllowCredentials(true);
+//                    cfg.setAllowedHeaders(Collections.singletonList("*"));
+//                    cfg.setExposedHeaders(Arrays.asList("Authorization"));
+//                    return cfg;
+//                }
+//            });
+//
+//        })
+                .authorizeHttpRequests(auth->{
+                auth.requestMatchers(HttpMethod.POST,"/drivers/add","/customers","/admin/test").permitAll()
 
-            cors.configurationSource(new CorsConfigurationSource() {
 
-                @Override
-                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                    CorsConfiguration cfg = new CorsConfiguration();
-
-                    cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-                    cfg.setAllowedMethods(Collections.singletonList("*"));
-                    cfg.setAllowCredentials(true);
-                    cfg.setAllowedHeaders(Collections.singletonList("*"));
-                    cfg.setExposedHeaders(Arrays.asList("Authorization"));
-                    return cfg;
-                }
-            });
-
-        }).authorizeHttpRequests(auth->{
-                auth.requestMatchers(HttpMethod.POST,"/drivers/add","/customers","/admin").permitAll()
 //                        .requestMatchers(HttpMethod.GET,"/customers/**","/trip-bookings").hasRole("ADMIN")
 //                        .requestMatchers("/admin/**","/drivers/**","/cabs/**").hasRole("ADMIN")
 //
-//                        .requestMatchers(HttpMethod.PUT,"/customers").hasRole("CUSTOMER")
-//                        .requestMatchers(HttpMethod.DELETE,"/customers/{customerId}").hasRole("CUSTOMER")
-//                        .requestMatchers("/trip-bookings").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT,"/customers").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE,"/customers/{customerId}").hasRole("CUSTOMER")
+                        .requestMatchers("/trip-bookings/**").hasRole("CUSTOMER")
 //
-//                        .requestMatchers("/drivers/update","/delete/{id}").hasRole("DRIVER")
+                        .requestMatchers("/drivers/update","/drivers/delete/{id}").hasRole("DRIVER")
                 .anyRequest().authenticated();
         })
 //        .csrf(csrf-> csrf.ignoringRequestMatchers("/drivers/add", "/customers","/admin"))
