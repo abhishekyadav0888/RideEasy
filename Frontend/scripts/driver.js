@@ -45,15 +45,15 @@ function signupDriver() {
   
     // Create the driver object
     const driver = {
-      name: name,
-      address: address,
-      email: email,
-      mobile: mobile,
-      username: username,
-      password: password,
-      license: license,
-      rating: rating,
-      role : role
+      "name": name,
+      "address": address,
+      "email": email,
+      "mobile": mobile,
+      "userName": username,
+      "password": password,
+      "license": license,
+      "rating": rating,
+      "role" : role
     };
   
     // Send a POST request to the server to create the driver

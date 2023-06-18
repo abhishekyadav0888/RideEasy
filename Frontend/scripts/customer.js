@@ -1,6 +1,6 @@
-function loginCustomer() {
-  window.location.href = 'customerDashboard.html';
-}
+// function loginCustomer() {
+//   window.location.href = 'customerDashboard.html';
+// }
 
 // // Function to handle successful login
 // function handleSuccessfulLogin() {
@@ -55,7 +55,11 @@ function loginCustomer() {
 
 
 
-function signupCustomer() {
+function signupCustomer(event) {
+  // Prevent form submission
+  console.log("Methdo running")
+  event.preventDefault();
+
   // Get input values from the form fields
   const name = document.getElementById("name").value;
   const address = document.getElementById("address").value;
@@ -67,13 +71,13 @@ function signupCustomer() {
 
   // Create a data object with the input values
   const data = {
-    name: name,
-    address: address,
-    email: email,
-    mobile_number: mobile,
-    user_name: username,
-    password: password,
-    role: role
+    "name": name,
+    "address": address,
+    "email": email,
+    "mobileNumber": mobile,
+    "userName": username,
+    "password": password,
+    "role": role
   };
 
   // Send a POST request to the API endpoint
@@ -85,7 +89,8 @@ function signupCustomer() {
     body: JSON.stringify(data)
   })
     .then(response => {
-      if (response.ok) {
+      console.log(response);
+      if (response.created) {
         console.log("Customer created successfully!");
         window.location.href = 'customerDashboard.html';
       } else {
@@ -95,19 +100,6 @@ function signupCustomer() {
     .catch(error => {
       console.error("Error:", error);
     });
-
 }
 
-
-function checkAPI() {
-  fetch("http://localhost:8088/customers")
-    .then(response => response.json())
-    .then(data => {
-      console.log("API is working:", data);
-    })
-    .catch(error => {
-      console.error("API is not working:", error);
-    });
-}
-
-checkAPI();
+// checkAPI();

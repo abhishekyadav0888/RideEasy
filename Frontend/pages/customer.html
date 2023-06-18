@@ -40,7 +40,7 @@
         <button type="submit" onclick="loginCustomer()">Login</button>
       </form>
 
-      <form class="signup-form" id="signup-form">
+      <form class="signup-form" id="signup-form" onsubmit="signupCustomer(event)">
         <h2>Customer Signup</h2>
         <div class="form-group">
           <label for="name">Name:</label>
@@ -66,7 +66,7 @@
           <label for="password">Password:</label>
           <input type="password" id="customer-password" name="password" required>
         </div>
-        <button type="submit" onclick="signupCustomer()">Signup</button>
+        <button type="submit" >Signup</button>
       </form>
       
     </div>
