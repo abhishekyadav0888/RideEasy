@@ -1,15 +1,16 @@
+const apiEndpoint = 'http://localhost:8088';
 
 // Function to display the selected content
 function displayContent(option) {
-  const content = document.querySelector('.content');
+    const content = document.querySelector('.content');
 
-  // Clear previous content
-  content.innerHTML = '';
+    // Clear previous content
+    content.innerHTML = '';
 
-  // Render the selected content
-  switch (option) {
-      case 'update-customer':
-          content.innerHTML = `
+    // Render the selected content
+    switch (option) {
+        case 'update-customer':
+            content.innerHTML = `
               <h2>Update customer</h2>
               <form>
                   <label for="customerName">Customer Name</label>
@@ -19,9 +20,9 @@ function displayContent(option) {
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Update</button>
               </form>
           `;
-          break;
-      case 'insert-trip-booking':
-          content.innerHTML = `
+            break;
+        case 'insert-trip-booking':
+            content.innerHTML = `
               <h2>Insert trip booking</h2>
               <form>
                   <label for="fromLocation">From Location</label>
@@ -37,9 +38,9 @@ function displayContent(option) {
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Book Trip</button>
               </form>
           `;
-          break;
-      case 'update-trip-booking':
-          content.innerHTML = `
+            break;
+        case 'update-trip-booking':
+            content.innerHTML = `
               <h2>Update trip booking</h2>
               <form>
                   <label for="bookingId">Booking ID</label>
@@ -48,18 +49,16 @@ function displayContent(option) {
                   <input type="text" id="newFromLocation" name="newFromLocation">
                   <label for="newToLocation">New To Location</label>
                   <input type="text" id="newToLocation" name="newToLocation">
-                  <label for="newBookingDate">New Booking Date</label>
-                  <input type="date" id="newBookingDate" name="newBookingDate">
-                  <label for="newPassengerCount">New Passenger Count</label>
-                  <input type="number" id="newPassengerCount" name="newPassengerCount">
-                  <label for="newLuggageCount">New Luggage Count</label>
-                  <input type="number" id="newLuggageCount" name="newLuggageCount">
+                  <label for="newFromDate">New Booking Date</label>
+                  <input type="date" id="newFromDate" name="newFromDate">
+                  <label for="newToDate">New Booking Date</label>
+                  <input type="date" id="newToDate" name="newToDate">
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Update Booking</button>
               </form>
           `;
-          break;
-      case 'delete-trip-booking':
-          content.innerHTML = `
+            break;
+        case 'delete-trip-booking':
+            content.innerHTML = `
               <h2>Delete trip booking</h2>
               <form>
                   <label for="bookingId">Booking ID</label>
@@ -67,9 +66,9 @@ function displayContent(option) {
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Delete Booking</button>
               </form>
           `;
-          break;
-      case 'calculate-bill':
-          content.innerHTML = `
+            break;
+        case 'calculate-bill':
+            content.innerHTML = `
               <h2>Calculate bill</h2>
               <form>
                   <label for="bookingId">Booking ID</label>
@@ -77,10 +76,10 @@ function displayContent(option) {
                   <button type="submit">Calculate</button>
               </form>
           `;
-          break;
-      default:
-          content.innerHTML = '<h2>Welcome, Customer!</h2><p>Select an option from the sidebar to view the results.</p>';
-  }
+            break;
+        default:
+            content.innerHTML = '<h2>Welcome, Customer!</h2><p>Select an option from the sidebar to view the results.</p>';
+    }
 }
 
 // Functions for form submissions
@@ -101,7 +100,7 @@ function insertTripBooking(event) {
         fromDateTime: fromDateTime,
         toDateTime: toDateTime,
         // Add other form fields as needed
-      };
+    };
 
     // Make the POST request to the API endpoint
     fetch('your-api-endpoint', {
@@ -126,13 +125,102 @@ function insertTripBooking(event) {
 
 function updateTripBooking(event) {
     event.preventDefault();
-    // Handle update trip booking logic here
+
+    const bookingId = document.getElementById('bookingId').value;
+    const newFromLocation = document.getElementById('newFromLocation').value;
+    const newToLocation = document.getElementById('newToLocation').value;
+    const newFromDate = document.getElementById('newFromDate').value;
+    const newToDate = document.getElementById('newToDate').value;
+
+
+    // Construct the updated trip booking object
+    const updatedTripBooking = {
+        fromLocation: newFromLocation,
+        toLocation: newToLocation,
+        bookingDate: newBookingDate,
+        passengerCount: newPassengerCount,
+        luggageCount: newLuggageCount
+    };
+
+    // Make a PUT request to update the trip booking
+    fetch(`${apiEndpoint}/trip-bookings/${bookingId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTripBooking)
+    })
+    .then(response => {
+        // Handle the response
+        if (response.ok) {
+            // Display success message
+            console.log('Trip booking updated successfully!');
+
+            // Retrieve and display the updated trip details
+            fetch(`${apiEndpoint}/trip-bookings/${bookingId}`)
+                .then(response => response.json())
+                .then(updatedTrip => {
+                    const tripDetailsContainer = document.getElementById('tripDetailsContainer');
+                    tripDetailsContainer.innerHTML = `
+                        <h2>Updated Trip Details</h2>
+                        <p>Booking ID: ${updatedTrip.bookingId}</p>
+                        <p>From Location: ${updatedTrip.fromLocation}</p>
+                        <p>To Location: ${updatedTrip.toLocation}</p>
+                        <p>Booking Date: ${updatedTrip.bookingDate}</p>
+                        <p>Passenger Count: ${updatedTrip.passengerCount}</p>
+                        <p>Luggage Count: ${updatedTrip.luggageCount}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('An error occurred while retrieving updated trip details:', error);
+                });
+            
+            // Optionally, you can update the UI or perform any other action
+            
+        } else {
+            // Handle errors
+            console.error('Failed to update trip booking.');
+            // Optionally, you can display an error message or perform any other action
+        }
+    })
+    .catch(error => {
+        console.error('An error occurred while updating trip booking:', error);
+        // Optionally, you can display an error message or perform any other action
+    });
 }
+
+
 
 function deleteTripBooking(event) {
     event.preventDefault();
-    // Handle delete trip booking logic here
+
+    const bookingId = document.getElementById('bookingId').value;
+
+    // Make a DELETE request to delete the trip booking
+    fetch(`${apiEndpoint}/trip-bookings/${bookingId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        // Handle the response
+        if (response.ok) {
+            // Display success message
+            console.log('Trip booking deleted successfully!');
+            // Optionally, you can update the UI or perform any other action
+        } else {
+            // Handle errors
+            console.error('Failed to delete trip booking.');
+            // Optionally, you can display an error message or perform any other action
+        }
+    })
+    .catch(error => {
+        console.error('An error occurred while deleting trip booking:', error);
+        // Optionally, you can display an error message or perform any other action
+    });
 }
+
 
 function calculateBill(event) {
     event.preventDefault();
@@ -143,10 +231,10 @@ function calculateBill(event) {
 document.getElementById("logout-button").addEventListener("click", confirmLogout);
 
 function confirmLogout() {
-  if (confirm("Are you sure you want to logout?")) {
-    logoutCustomer();
-  }
-} 
-function logoutCustomer(){
-  window.location.href = 'index.html';
+    if (confirm("Are you sure you want to logout?")) {
+        logoutCustomer();
+    }
+}
+function logoutCustomer() {
+    window.location.href = 'index.html';
 }
