@@ -1,199 +1,197 @@
 /* Global styles */
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px 10px 20px;
-    background-color: #f5f5f5;
-  }
-  
-  /* .logo img {
-    width: 100px;
-    height: 120px;
-  } */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 10px 20px;
+  background-color: #f5f5f5;
+  /* border-bottom: 1px solid rgb(121, 121, 121); */
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
 
-  #nav-logo-img{
-    height: 60px;
-    width: 150px;
-  }
-  
-  .login .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .login .dropbtn {
-    background-color: #f5f5f5;
-    color: #333;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .login .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    z-index: 1;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  }
-  
-  .login .dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .login .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .login .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .login .dropdown:hover .dropbtn {
-    background-color: #e5e5e5;
-  }
-  
-  
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  .sidebar {
-    flex: 0 0 200px;
-    background-color: #f5f5f5;
-    padding: 20px;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar ul li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar ul li a {
-    display: block;
-    padding: 5px;
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .sidebar ul li a:hover {
-    background-color: #e5e5e5;
-  }
-  
-  .content {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-  }
-  
-  /* Additional styles for content section */
-  .content h2 {
-    margin-bottom: 10px;
-  }
-  
-  .content p {
-    margin-top: 0;
-  }
-  
-  /* Styles for logo and login section in the navigation bar */
-  .logo img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-  }
-  
-  .login .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .login .dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .login .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .login .dropdown-content a {
-    color: black;
-    padding: 10px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .login .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .login .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .login .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-  }
-  
+#nav-logo-img{
+  height: 60px;
+  width: 150px;
+}
+
+.login .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.login .dropbtn {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.login .dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.login .dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.login .dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.login .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.login .dropdown:hover .dropbtn {
+  background-color: #e5e5e5;
+}
+
+
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+
+.container {
+display: flex;
+min-height: 100vh;
+}
+
+.sidebar {
+flex: 0 0 200px;
+background-color: #f5f5f5;
+padding: 20px;
+}
+
+.sidebar ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+.sidebar ul li {
+margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+display: block;
+padding: 5px;
+text-decoration: none;
+color: #333;
+}
+
+.sidebar ul li a:hover {
+background-color: #e5e5e5;
+}
+
+.content {
+flex: 1;
+background-color: #fff;
+padding: 20px;
+}
+
+/* Additional styles for content section */
+.content h2 {
+margin-bottom: 10px;
+}
+
+.content p {
+margin-top: 0;
+}
+
+/* Styles for logo and login section in the navigation bar */
+.logo img {
+width: 50px;
+height: 50px;
+margin-right: 10px;
+}
+
+.login .dropdown {
+position: relative;
+display: inline-block;
+}
+
+.login .dropbtn {
+background-color: #4CAF50;
+color: white;
+padding: 10px;
+border: none;
+cursor: pointer;
+}
+
+.login .dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.login .dropdown-content a {
+color: black;
+padding: 10px;
+text-decoration: none;
+display: block;
+}
+
+.login .dropdown-content a:hover {
+background-color: #f1f1f1;
+}
+
+.login .dropdown:hover .dropdown-content {
+display: block;
+}
+
+.login .dropdown:hover .dropbtn {
+background-color: #3e8e41;
+}
+
+
 /* Logout Button */
 .button-24 {
-  background: #FF4742;
-  border: 1px solid #FF4742;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 16px;
-  min-height: 40px;
-  outline: 0;
-  padding: 12px 14px;
-  text-align: center;
-  text-rendering: geometricprecision;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
+background: #FF4742;
+border: 1px solid #FF4742;
+border-radius: 6px;
+box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+box-sizing: border-box;
+color: #FFFFFF;
+cursor: pointer;
+display: inline-block;
+font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+font-size: 16px;
+font-weight: 800;
+line-height: 16px;
+min-height: 40px;
+outline: 0;
+padding: 12px 14px;
+text-align: center;
+text-rendering: geometricprecision;
+text-transform: none;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+vertical-align: middle;
 }
 
 .button-24:hover,
 .button-24:active {
-  background-color: initial;
-  background-position: 0 0;
-  color: #FF4742;
+background-color: initial;
+background-position: 0 0;
+color: #FF4742;
 }
 
 .button-24:active {
-  opacity: .5;
+opacity: .5;
 }
