@@ -1,6 +1,6 @@
 # able-laborer-3546
 
-# REST API for Bus Reservation System Portal 
+# REST API for Online Cab Booking Service
 
 * We have developed this REST API for Online Cab Booking Application. This API performs all the fundamental CRUD operations of any Cab Booking Application platform with user validation at every step.
 * This project is developed by team of 5 Back-end Developers during project week in Masai School. 
