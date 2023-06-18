@@ -36,10 +36,10 @@
 ## Contributors
 
 * [@Abhishek](https://github.com/abhishekyadav0888)
-* [@Abhijeet Hiwale](https://github.com/)
-* [@Lokesh Gola](https://github.com/)
+* [@Abhijeet Hiwale](https://github.com/Abhii-07)
+* [@Lokesh Gola](https://github.com/LokeshGola)
 * [@Roopa Ram](https://github.com/rooparam01)
-* [@Ashish Kaushik](https://github.com/)
+* [@Ashish Kaushik](https://github.com/ashishk2007)
 
 ## Installation & Run
 
@@ -109,7 +109,7 @@
    
 ```
  
-### E-R Diagram Of Bus Application
+### E-R Diagram Of RideEasy Application
 
 
 ![ERDaigram](https://github.com/abhishekyadav0888/able-laborer-3546/assets/111178057/aac5420a-b0cb-4591-86c4-0c530b78fc7d)
