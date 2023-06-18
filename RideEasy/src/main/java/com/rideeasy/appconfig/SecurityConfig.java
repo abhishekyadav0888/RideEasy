@@ -44,19 +44,20 @@ public class SecurityConfig {
 
         }).authorizeHttpRequests(auth->{
                 auth.requestMatchers(HttpMethod.POST,"/drivers/add","/customers","/admin").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/customers/**","/trip-bookings").hasRole("ADMIN")
-                        .requestMatchers("/admin/**","/drivers/**","/cabs/**").hasRole("ADMIN")
-
-                        .requestMatchers(HttpMethod.PUT,"/customers").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.DELETE,"/customers/{customerId}").hasRole("CUSTOMER")
-                        .requestMatchers("/trip-bookings").hasRole("CUSTOMER")
-
-                        .requestMatchers("/drivers/update","/delete/{id}").hasRole("DRIVER")
+//                        .requestMatchers(HttpMethod.GET,"/customers/**","/trip-bookings").hasRole("ADMIN")
+//                        .requestMatchers("/admin/**","/drivers/**","/cabs/**").hasRole("ADMIN")
+//
+//                        .requestMatchers(HttpMethod.PUT,"/customers").hasRole("CUSTOMER")
+//                        .requestMatchers(HttpMethod.DELETE,"/customers/{customerId}").hasRole("CUSTOMER")
+//                        .requestMatchers("/trip-bookings").hasRole("CUSTOMER")
+//
+//                        .requestMatchers("/drivers/update","/delete/{id}").hasRole("DRIVER")
                 .anyRequest().authenticated();
         })
-        .csrf(csrf-> csrf.ignoringRequestMatchers("/drivers/add", "/customers","/admin"))
-        .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-        .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+//        .csrf(csrf-> csrf.ignoringRequestMatchers("/drivers/add", "/customers","/admin"))
+                .csrf((csrf)->csrf.disable())
+//        .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+//        .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
