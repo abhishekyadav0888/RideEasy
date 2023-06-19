@@ -56,14 +56,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/customers/{customerId}").hasRole("CUSTOMER")
                         .requestMatchers("/trip-bookings/**","/trip-bookings","/customers/hello").hasRole("CUSTOMER")
 
+                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
+
 //
                         .requestMatchers("/drivers/update","/drivers/delete/{id}").hasRole("DRIVER")
                 .anyRequest().authenticated();
         })
-//        .csrf(csrf-> csrf.ignoringRequestMatchers("/drivers/add", "/customers","/admin"))
-                .csrf((csrf)->csrf.disable())
         .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
         .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+
+//        .csrf(csrf-> csrf.ignoringRequestMatchers("/drivers/add", "/customers","/admin"))
+        .csrf(csrf -> csrf.disable())
+
 
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());

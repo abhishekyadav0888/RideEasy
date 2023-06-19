@@ -44,8 +44,14 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
                 String username= String.valueOf(claims.get("username"));
 
                 String authorities= (String)claims.get("authorities");
-
+                //
+                System.out.println("username: "+username);
+                System.out.println("authorities: "+authorities);
+                //
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
+
+                System.out.println("authorities: "+authorities);
+                System.out.println("authenticate-principle: "+auth.getPrincipal());
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
 

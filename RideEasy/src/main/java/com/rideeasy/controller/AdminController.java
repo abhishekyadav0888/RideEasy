@@ -31,7 +31,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseEntity<Admin> insertAdminController(@Valid @RequestBody Admin admin){
 		try {
 			log.info("Try to insert new Admin : AdminController");
