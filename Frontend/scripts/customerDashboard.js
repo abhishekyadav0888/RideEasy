@@ -24,17 +24,16 @@ function displayContent(option) {
         case 'insert-trip-booking':
             content.innerHTML = `
               <h2>Insert trip booking</h2>
-              <form>
+              <form onsubmit="insertTripBooking(event)>
                   <label for="fromLocation">From Location</label>
                   <input type="text" id="fromLocation" name="fromLocation">
                   <label for="toLocation">To Location</label>
                   <input type="text" id="toLocation" name="toLocation">
-                  <label for="bookingDate">Booking Date</label>
-                  <input type="date" id="bookingDate" name="bookingDate">
-                  <label for="passengerCount">Passenger Count</label>
-                  <input type="number" id="passengerCount" name="passengerCount">
-                  <label for="luggageCount">Luggage Count</label>
-                  <input type="number" id="luggageCount" name="luggageCount">
+                  <label for="fromDateTime">From Booking Date</label>
+                  <input type="date" id="fromDateTime" name="fromDateTime">
+                  <label for="toDateTime">To Booking Date</label>
+                  <input type="date" id="toDateTime" name="toDateTime">
+                  
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Book Trip</button>
               </form>
           `;
@@ -94,34 +93,31 @@ function insertTripBooking(event) {
     const toLocation = document.getElementById('toLocation').value;
     const fromDateTime = document.getElementById('fromDateTime').value;
     const toDateTime = document.getElementById('toDateTime').value;
+    const customerId = sessionStorage.getItem('customerId'); // Retrieve customer ID from session storage
+
     const tripData = {
         fromLocation: fromLocation,
         toLocation: toLocation,
         fromDateTime: fromDateTime,
-        toDateTime: toDateTime,
-        // Add other form fields as needed
+        toDateTime: toDateTime
     };
 
-    // Make the POST request to the API endpoint
-    fetch('your-api-endpoint', {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic Q1VTVF9yYWoxMjM6cmFqMTIz");
+    var requestOptions = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: myHeaders,
         body: JSON.stringify(tripData),
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response from the API
-            console.log('Trip inserted successfully:', data);
-            // Add any logic to update the UI or display a success message
-        })
-        .catch(error => {
-            // Handle any errors that occurred during the POST request
-            console.error('Error inserting trip:', error);
-            // Add any logic to display an error message or handle the error appropriately
-        });
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:8088/trip-bookings/{customerId}", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 }
+
 
 function updateTripBooking(event) {
     event.preventDefault();
@@ -150,18 +146,18 @@ function updateTripBooking(event) {
         },
         body: JSON.stringify(updatedTripBooking)
     })
-    .then(response => {
-        // Handle the response
-        if (response.ok) {
-            // Display success message
-            console.log('Trip booking updated successfully!');
+        .then(response => {
+            // Handle the response
+            if (response.ok) {
+                // Display success message
+                console.log('Trip booking updated successfully!');
 
-            // Retrieve and display the updated trip details
-            fetch(`${apiEndpoint}/trip-bookings/${bookingId}`)
-                .then(response => response.json())
-                .then(updatedTrip => {
-                    const tripDetailsContainer = document.getElementById('tripDetailsContainer');
-                    tripDetailsContainer.innerHTML = `
+                // Retrieve and display the updated trip details
+                fetch(`${apiEndpoint}/trip-bookings/${bookingId}`)
+                    .then(response => response.json())
+                    .then(updatedTrip => {
+                        const tripDetailsContainer = document.getElementById('tripDetailsContainer');
+                        tripDetailsContainer.innerHTML = `
                         <h2>Updated Trip Details</h2>
                         <p>Booking ID: ${updatedTrip.bookingId}</p>
                         <p>From Location: ${updatedTrip.fromLocation}</p>
@@ -170,23 +166,23 @@ function updateTripBooking(event) {
                         <p>Passenger Count: ${updatedTrip.passengerCount}</p>
                         <p>Luggage Count: ${updatedTrip.luggageCount}</p>
                     `;
-                })
-                .catch(error => {
-                    console.error('An error occurred while retrieving updated trip details:', error);
-                });
-            
-            // Optionally, you can update the UI or perform any other action
-            
-        } else {
-            // Handle errors
-            console.error('Failed to update trip booking.');
+                    })
+                    .catch(error => {
+                        console.error('An error occurred while retrieving updated trip details:', error);
+                    });
+
+                // Optionally, you can update the UI or perform any other action
+
+            } else {
+                // Handle errors
+                console.error('Failed to update trip booking.');
+                // Optionally, you can display an error message or perform any other action
+            }
+        })
+        .catch(error => {
+            console.error('An error occurred while updating trip booking:', error);
             // Optionally, you can display an error message or perform any other action
-        }
-    })
-    .catch(error => {
-        console.error('An error occurred while updating trip booking:', error);
-        // Optionally, you can display an error message or perform any other action
-    });
+        });
 }
 
 
@@ -203,22 +199,22 @@ function deleteTripBooking(event) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        // Handle the response
-        if (response.ok) {
-            // Display success message
-            console.log('Trip booking deleted successfully!');
-            // Optionally, you can update the UI or perform any other action
-        } else {
-            // Handle errors
-            console.error('Failed to delete trip booking.');
+        .then(response => {
+            // Handle the response
+            if (response.ok) {
+                // Display success message
+                console.log('Trip booking deleted successfully!');
+                // Optionally, you can update the UI or perform any other action
+            } else {
+                // Handle errors
+                console.error('Failed to delete trip booking.');
+                // Optionally, you can display an error message or perform any other action
+            }
+        })
+        .catch(error => {
+            console.error('An error occurred while deleting trip booking:', error);
             // Optionally, you can display an error message or perform any other action
-        }
-    })
-    .catch(error => {
-        console.error('An error occurred while deleting trip booking:', error);
-        // Optionally, you can display an error message or perform any other action
-    });
+        });
 }
 
 
