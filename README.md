@@ -40,7 +40,6 @@
 * [@Abhijeet Hiwale](https://github.com/Abhii-07)
 * [@Lokesh Gola](https://github.com/LokeshGola)
 * [@Roopa Ram](https://github.com/rooparam01)
-* [@Ashish Kaushik](https://github.com/ashishk2007)
 
 ## Installation & Run
 
