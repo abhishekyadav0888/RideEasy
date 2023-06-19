@@ -36,7 +36,7 @@
 
 ## Contributors
 
-* [@Abhishek](https://github.com/abhishekyadav0888)
+* [@Abhishek Yadav](https://github.com/abhishekyadav0888)
 * [@Abhijeet Hiwale](https://github.com/Abhii-07)
 * [@Lokesh Gola](https://github.com/LokeshGola)
 * [@Roopa Ram](https://github.com/rooparam01)
