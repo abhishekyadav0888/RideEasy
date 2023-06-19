@@ -45,21 +45,23 @@ public class SecurityConfig {
 
         })
                 .authorizeHttpRequests(auth->{
-                auth.requestMatchers(HttpMethod.POST,"/drivers/add","/customers/customer","/admin/add").permitAll()
+                auth.requestMatchers(HttpMethod.POST,"/drivers/add","/customers/customer","/admin/add","/drivers/signIn","/customers/signIn").permitAll()
 
 
-                        .requestMatchers(HttpMethod.GET,"/customers/**","/trip-bookings/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/**","/drivers/**","/cabs/**").hasRole("ADMIN")
-
+//                        .requestMatchers(HttpMethod.GET,"/customers/**","/trip-bookings/**").hasRole("ADMIN")
+//                        .requestMatchers("/admin/**","/drivers/**","/cabs/**").hasRole("ADMIN")
 //
+////
                         .requestMatchers(HttpMethod.PUT,"/customers/customer").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.DELETE,"/customers/customer/{customerId}").hasRole("CUSTOMER")
-                        .requestMatchers("/trip-bookings/**","/trip-bookings","/customers/customer/hello").hasRole("CUSTOMER")
+                        .requestMatchers("/trip-bookings/**","/trip-bookings","/customers/customer/hello","/customers/signIn").hasRole("CUSTOMER")
 
-//                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
+//                        .requestMatchers("/customers/**").hasRole("CUSTOMER")
 
-                        .requestMatchers("/drivers/add","/drivers/update","drivers/delete").hasRole("DRIVER")
-                        .requestMatchers("/drivers/update","/drivers/delete/{id}","/drivers/hello").hasRole("DRIVER")
+//                        .requestMatchers().hasRole("DRIVER")
+                        .requestMatchers("/drivers/add","/drivers/update","/drivers/delete/{id}","/drivers/hello","/driver/signIn").hasRole("DRIVER")
+
+//                        .requestMatchers("/drivers/**").hasRole("DRIVER")
                 .anyRequest().authenticated();
         })
         .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
