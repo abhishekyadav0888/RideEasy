@@ -29,7 +29,7 @@ public class TripBookingController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<TripBooking> updateTripBooking(
               @Valid @RequestBody TripBooking tripBooking) {
 //        tripBooking.setTripBookingId(tripBooking);

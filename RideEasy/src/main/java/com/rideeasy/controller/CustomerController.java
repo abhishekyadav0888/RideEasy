@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -23,13 +24,13 @@ public class CustomerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/customers/hello")
+    @GetMapping("/customer/hello")
     public String helloMethodFromCustomerCont(){
         return "Hello from Customer Controller";
     }
 
 
-    @PostMapping("/customers")
+    @PostMapping("/customer")
     public ResponseEntity<Customer> addNewCustomer(@Valid @RequestBody Customer customer){
         log.info("Try to add new Customer : CustomerController");
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
@@ -38,7 +39,7 @@ public class CustomerController {
         return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
     }
 
-    @PutMapping("/customers")
+    @PutMapping("/customer")
     public ResponseEntity<Customer> updateExistingCustomer(@Valid @RequestBody Customer customer){
         log.info("Try to add update Customer : CustomerController");
         Customer updateCustomer = customerService.updateCustomer(customer);
@@ -46,7 +47,7 @@ public class CustomerController {
         return new ResponseEntity<>(updateCustomer, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/customers/{customerId}")
+    @DeleteMapping("/customer/{customerId}")
     public ResponseEntity<Customer> deleteExistingCustomer(@PathVariable Integer customerId){
         log.info("Try to add delete Customer : CustomerController");
        Customer deletedCustomer = customerService.deleteCustomer(customerId);
@@ -54,7 +55,7 @@ public class CustomerController {
         return new ResponseEntity<>(deletedCustomer,HttpStatus.OK);
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/customer")
     public ResponseEntity<List<Customer>> getAllCustomer(){
         log.info("Try to get All Customers : CustomerController");
         List<Customer> customerList = customerService.getAllCustomers();
@@ -62,7 +63,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerList,HttpStatus.OK);
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/customer/{customerId}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Integer customerId){
         log.info("Try to get Customer : CustomerController");
         Customer customer = customerService.getCustomerById(customerId);
@@ -70,7 +71,7 @@ public class CustomerController {
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 
-    @PostMapping("/customers/{username}/{password}")
+    @PostMapping("/customer/{username}/{password}")
     public ResponseEntity<Customer> validationByUserNameAndPassword(@PathVariable String username,@PathVariable String password){
         log.info("Try to Validate Customer : CustomerController");
         Customer validatedCustomer = customerService.validateCustomer(username,password);
@@ -78,7 +79,7 @@ public class CustomerController {
         return new ResponseEntity<>(validatedCustomer,HttpStatus.OK);
     }
 
-    @PutMapping("/customers/{customerId}")
+    @PutMapping("/customer/{customerId}")
     public ResponseEntity<Customer> unblockCustomerById(@PathVariable Integer customerId){
         log.info("Try to Unblock Customer : CustomerController");
         Customer unBlockCustomer = customerService.unBlockCustomer(customerId);
