@@ -31,55 +31,49 @@ function loginDriver(){
 // }
 
 
-function signupDriver() {
-    // Get the form inputs
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const email = document.getElementById('email').value;
-    const mobile = document.getElementById('mobile').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const license = document.getElementById('license').value;
-    const rating = parseFloat(document.getElementById('rating').value);
-    const role = "ROLE_DRIVER";
+function signupDriver(event) {
+  event.preventDefault();
+
+  // Get input values from the form fields
+  const name = document.getElementById("name").value;
+  const address = document.getElementById("address").value;
+  const email = document.getElementById("email").value;
+  const mobile = document.getElementById("mobile").value;
+  const username = document.getElementById("customer-username").value;
+  const password = document.getElementById("customer-password").value;
+  const role = "ROLE_CUSTOMER";
+
   
-    // Create the driver object
-    const driver = {
-      "name": name,
-      "address": address,
-      "email": email,
-      "mobile": mobile,
-      "userName": username,
-      "password": password,
-      "license": license,
-      "rating": rating,
-      "role" : role
-    };
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
   
-    // Send a POST request to the server to create the driver
-    fetch('http://localhost:8088/drivers/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(driver)
+  // Create a data object with the input values
+  const raw = {
+    "name": name,
+    "userName": username,
+    "password": password,
+    "address": address,
+    "mobileNumber": mobile,
+    "email": email,
+    "role": role
+  };
+
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: JSON.stringify(raw),
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8088/customers", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result);
+      // Show success message
+      alert("Signup successful, Please Sign In");
+      // Redirect to another page or perform any other action
+      // window.location.href = 'customerDashboard.html';
     })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the server
-        if (data.success) {
-          // Signup successful
-          alert('Driver signup successful!');
-          // Redirect to the login page or perform any other necessary actions
-        } else {
-          // Signup failed
-          alert('Driver signup failed. Please try again.');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // Handle any errors that occurred during the request
-        alert('An error occurred. Please try again later.');
-      });
-  }
-  
+    .catch(error => console.log('error', error));
+}

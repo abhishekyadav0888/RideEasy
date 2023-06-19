@@ -40,10 +40,10 @@
         <label for="remember">Remember me:</label>
         <input type="checkbox" id="remember" name="remember">
       </div>
-      <button type="submit" onclick="loginDriver()">Login</button>
+      <button type="submit" onclick="handleLogin()">Login</button>
     </form>
 
-    <form class="signup-form" id="signup-form">
+    <form class="signup-form" id="signup-form" onsubmit="signupDriver(event)">
       <h2>Driver Signup</h2>
       <div class="form-group">
         <label for="name">Name:</label>
@@ -77,7 +77,7 @@
         <label for="rating">Rating:</label>
         <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" required>
       </div>
-      <button type="submit" onclick="signupDriver()">Signup</button>
+      <button type="submit">Signup</button>
     </form>
   </div>
 
