@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer validateCustomer(String username, String password) {
-        Optional<Customer> opt = customerRepository.findByuserName(username);
+        Optional<Customer> opt = customerRepository.findByUserName(username);
         if(opt.isPresent()){
             Customer customer = opt.get();
             if(customer.getPassword().equals(password)){
@@ -114,7 +114,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer getCustomerByUsername(String username) {
-        Optional<Customer> opt = customerRepository.findByuserName(username);
+        Optional<Customer> opt = customerRepository.findByUserName(username);
         if(opt.isPresent()){
             Customer customer = opt.get();
             customerRepository.save(customer);

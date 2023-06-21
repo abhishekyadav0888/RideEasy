@@ -2,8 +2,6 @@ package com.rideeasy.appconfig;
 
 import java.io.IOException;
 import javax.crypto.SecretKey;
-
-import com.rideeasy.appconfig.SecurityConstants;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,7 +23,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        System.out.println("1");
+
         String jwt= request.getHeader(SecurityConstants.JWT_HEADER);
 
 
@@ -44,18 +42,10 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
                 String username= String.valueOf(claims.get("username"));
 
                 String authorities= (String)claims.get("authorities");
-                //
-                System.out.println("username: "+username);
-                System.out.println("authorities: "+authorities);
-                //
+
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 
-                System.out.println("authorities: "+authorities);
-                System.out.println("authenticate-principle: "+auth.getPrincipal());
-
                 SecurityContextHolder.getContext().setAuthentication(auth);
-
-                System.out.println("2");
 
             } catch (Exception e) {
                 throw new BadCredentialsException("Invalid Token received..");
@@ -63,7 +53,6 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
         }
 
-        System.out.println("3");
         filterChain.doFilter(request, response);
 
     }
@@ -74,12 +63,10 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
-        return request.getServletPath().equals("/customers/signIn");
-//        return request.getServletPath().equals("/drivers/signIn");
+        String serveletPath = request.getServletPath();
+        return serveletPath.equals("/customers/signIn") ||
+                serveletPath.equals("/drivers/signIn") ||
+                serveletPath.equals("/admin/signIn");
     }
 
-//
-
 }
-

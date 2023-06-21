@@ -1,34 +1,27 @@
 package com.rideeasy.appconfig;
 
-import com.rideeasy.exception.RideEasyException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.crypto.SecretKey;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 
-    /**
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
-     * Creates a Jwt token after authentication is done and add this token to the response.
-     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -36,11 +29,14 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
         System.out.println("inside doFilter....");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ;
         if (null != authentication) {
+
             System.out.println("auth.getAuthorities "+authentication.getAuthorities());
 
+
             SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
+
+
 
             String jwt = Jwts.builder()
                     .setIssuer("Ram")
@@ -52,7 +48,9 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
                     .signWith(key).compact();
 
             response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+
         }
+
         filterChain.doFilter(request, response);
     }
 
@@ -72,10 +70,12 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return !request.getServletPath().equals("/customers/signIn") ;
-//        return !request.getServletPath().equals("/drivers/signIn");
-
+        String servletPath = request.getServletPath();
+        return !(servletPath.equals("/customers/signIn") ||
+                servletPath.equals("/drivers/signIn") ||
+                servletPath.equals("/admin/signIn"));
     }
 
 
 }
+
