@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
-    public Optional<Customer> findByuserName(String username);
+    public Optional<Customer> findByUserName(String username);
 
     @Query("Select c from Customer c where c.isDeleted=false")
     public List<Customer> getAllCustomers();

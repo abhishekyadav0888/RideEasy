@@ -92,7 +92,7 @@ public class CustomerController {
         log.info("Class: Customer Controller, method: getLoggedInCustomerDetailsHandler  started");
         Customer customer = customerService.getCustomerByUsername(auth.getName());
         log.info("Class: Customer Controller, method:  returned "+customer);
-        return new ResponseEntity<>(customer.getUserName()+" Logged in Successfully", HttpStatus.FOUND);
+        return new ResponseEntity<>(customer.getUserName()+" Logged in Successfully", HttpStatus.ACCEPTED);
     }
 
 }
