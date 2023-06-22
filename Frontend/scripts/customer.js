@@ -1,67 +1,68 @@
+// Login Function
+function handleLogin(event) {
+  event.preventDefault();
 
-function handleLogin() {
-  window.location.href = 'customerDashboard.html';
+  // Get input values from the form fields
+  const username = "CUST_" + document.getElementById("customer-username").value;
+  const password = document.getElementById("customer-password").value;
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", "Basic Q1VTVF9yYWoxMjM6cmFqMTIz");
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("http://localhost:8088/customers/signIn", requestOptions)
+    .then(response => {
+      if (response.ok) {
+        const authorizationHeader = response.headers.get('Authorization');
+        sessionStorage.setItem("authToken", authorizationHeader);
+        console.log(authorizationHeader);
+        sayHello();
+        window.location.href = 'customerDashboard.html';
+        // Use the authorizationHeader for further requests or processing
+      } else {
+        throw new Error('Login failed');
+      }
+    })
+    .catch(error => console.log('error', error));
+}
+// Test Login
+function sayHello() {
+  const authorizationHeader = sessionStorage.getItem("authToken");
+
+  if (!authorizationHeader) {
+    console.log("Authorization token not found in session storage.");
+    return;
+  }
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${authorizationHeader}`);
+
+  const requestOptions = {
+    method: 'GET',
+    headers: myHeaders
+  };
+
+  fetch("http://localhost:8088/customers/customer/hello", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 }
 
 
-
-// // Add event listener to the form submit event
-// const loginForm = document.getElementById('login-form');
-// loginForm.addEventListener('submit', handleLogin);
-
-// // Function to handle form submission
-// function handleLogin(event) {
-//   event.preventDefault();
-
-//   // Get input values from the form fields
-//   const username = "CUST_" + document.getElementById("customer-username").value;
-//   const password = document.getElementById("customer-password").value;
-
-//   var myHeaders = new Headers();
-//   myHeaders.append("Content-Type", "application/json");
-//   myHeaders.append("Authorization", "Basic Q1VTVF9yYWoxMjM6cmFqMTIz");
-
-//   var requestOptions = {
-//     method: 'POST',
-//     headers: myHeaders,
-//     body: JSON.stringify({ username, password }),
-//     redirect: 'follow'
-//   };
-
-//   // Send a POST request to the API endpoint for authentication
-//   fetch("http://localhost:8088/signIn", requestOptions)
-//     .then(response => response.text())
-//     .then(result => console.log(result))
-//     .catch(error => console.log('error', error));
-// }
-
-// function handleLogin(event) {
-//   event.preventDefault();
-
-//   // Get input values from the form fields
-//   const username = "CUST_" + document.getElementById("customer-username").value;
-//   const password = document.getElementById("customer-password").value;
-
-//   // Create the query string for the login parameters
-//   const queryString = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-//   const url = `http://localhost:8088/signIn?${queryString}`;
-
-//   // Send a GET request to the API endpoint for authentication
-//   fetch(url)
-//     .then(response => response.text())
-//     .then(result => {
-//       console.log(result);
-//       // Save the customerId in session or local storage
-//       const customerId = JSON.parse(result).customerId;
-//       localStorage.setItem('customerId', customerId);
-//       // Redirect to the customer dashboard
-//       window.location.href = 'customerDashboard.html';
-//     })
-//     .catch(error => console.log('error', error));
-// }
+// Logout Function
+function logout() {
+  sessionStorage.removeItem("authToken");
+  // Redirect or perform any other actions after logging out
+  window.location.href = 'index.html'; // Replace with the appropriate redirect URL
+}
 
 
-
+// Add new Customer 
 function signupCustomer(event) {
   event.preventDefault();
 
@@ -74,10 +75,10 @@ function signupCustomer(event) {
   const password = document.getElementById("customer-password").value;
   const role = "ROLE_CUSTOMER";
 
-  
+
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  
+
   // Create a data object with the input values
   const raw = {
     "name": name,
@@ -90,14 +91,14 @@ function signupCustomer(event) {
   };
 
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: JSON.stringify(raw),
-  redirect: 'follow'
-};
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(raw),
+    redirect: 'follow'
+  };
 
-fetch("http://localhost:8088/customers", requestOptions)
+  fetch("http://localhost:8088/customers", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);
