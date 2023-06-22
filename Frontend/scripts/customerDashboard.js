@@ -30,9 +30,9 @@ function displayContent(option) {
                   <label for="toLocation">To Location</label>
                   <input type="text" id="toLocation" name="toLocation">
                   <label for="fromDateTime">From Booking Date</label>
-                  <input type="date" id="fromDateTime" name="fromDateTime">
+                  <input type="datetime-local" id="fromDateTime" required>
                   <label for="toDateTime">To Booking Date</label>
-                  <input type="date" id="toDateTime" name="toDateTime">
+                  <input type="datetime-local" id="toDateTime" required>
                   
                   <button type="submit" style="font-size: 16px; background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Book Trip</button>
               </form>
@@ -89,34 +89,65 @@ function updateCustomer(event) {
 
 function insertTripBooking(event) {
     event.preventDefault();
+  
+    const authorizationHeader = sessionStorage.getItem("authToken");
+  
+    if (!authorizationHeader) {
+      console.log("Authorization token not found in session storage.");
+      return;
+    }
+  
+    // Extract the customer ID from the JWT token
+    const decodedToken = decodeJWT(authorizationHeader);
+    const customerId = decodedToken ? decodedToken.customerId : null;
+  
+    if (!customerId) {
+      console.log("Customer ID not found in the authorization token.");
+      return;
+    }
+  
     const fromLocation = document.getElementById('fromLocation').value;
     const toLocation = document.getElementById('toLocation').value;
     const fromDateTime = document.getElementById('fromDateTime').value;
     const toDateTime = document.getElementById('toDateTime').value;
-    const customerId = sessionStorage.getItem('customerId'); // Retrieve customer ID from session storage
-
+  
     const tripData = {
         fromLocation: fromLocation,
         toLocation: toLocation,
-        fromDateTime: fromDateTime,
-        toDateTime: toDateTime
-    };
-
+        fromDateTime: new Date(fromDateTime).toISOString(), // Convert to ISO 8601 format
+        toDateTime: new Date(toDateTime).toISOString() // Convert to ISO 8601 format
+      };
+  
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic Q1VTVF9yYWoxMjM6cmFqMTIz");
+    myHeaders.append("Authorization", `Bearer ${authorizationHeader}`);
+  
     var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: JSON.stringify(tripData),
-        redirect: 'follow'
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(tripData),
+      redirect: 'follow'
     };
-
-    fetch("http://localhost:8088/trip-bookings/{customerId}", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-}
+  
+    fetch(`http://localhost:8088/trip-bookings/${customerId}`, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+  
+  // Decode the JWT token and extract the payload data
+  function decodeJWT(token) {
+    try {
+      const tokenParts = token.split('.');
+      const encodedPayload = tokenParts[1];
+      const decodedPayload = atob(encodedPayload);
+      return JSON.parse(decodedPayload);
+    } catch (error) {
+      console.log('Error decoding JWT:', error);
+      return null;
+    }
+  }
+  
 
 
 function updateTripBooking(event) {
@@ -234,3 +265,14 @@ function confirmLogout() {
 function logoutCustomer() {
     window.location.href = 'index.html';
 }
+
+
+
+
+
+// {
+//     "fromLocation": "Pune",
+//     "toLocation": "Dubai",
+//     "fromDateTime": "2023-06-25T12:23:00",
+//     "toDateTime": "2023-06-27T12:23:00"
+// }

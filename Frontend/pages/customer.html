@@ -24,7 +24,7 @@
     </nav>
   
     <div class="container">
-      <form class="login-form" id="login-form">
+      <form class="login-form" id="login-form" onsubmit="handleLogin(event)">
         <h2>Customer Login</h2>
         <div class="form-group">
           <label for="username">Username:</label>
@@ -37,9 +37,9 @@
         <div class="form-group">
           <label for="remember"><input type="checkbox" id="remember" name="remember">Remember me:</label>
         </div>
-        <button type="submit" onclick="handleLogin()">Login</button>
+        <button type="submit">Login</button>
+        
       </form>
-
       <form class="signup-form" id="signup-form" onsubmit="signupCustomer(event)">
         <h2>Customer Signup</h2>
         <div class="form-group">
