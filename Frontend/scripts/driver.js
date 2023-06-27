@@ -3,11 +3,15 @@ function handleLogin(event) {
   event.preventDefault();
 
   // Get input values from the form fields
-  const username = "CUST_" + document.getElementById("driver-username").value;
-  const password = document.getElementById("driver-password").value;
+  const user = document.getElementById("username").value;
+  const username = `DRIVER_${user}`;
+  const password = document.getElementById("password").value;
+
+  const encodedCredentials = btoa(`${username}:${password}`);
+  const basicAuthHeader = `Basic ${encodedCredentials}`;
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Basic Q1VTVF9yYWoxMjM6cmFqMTIz");
+  myHeaders.append("Authorization", basicAuthHeader);
 
   var requestOptions = {
     method: 'GET',
@@ -30,6 +34,25 @@ function handleLogin(event) {
     })
     .catch(error => console.log('error', error));
 }
+
+function showLoadingScreen() {
+  // Create or show your loading screen element
+  const loadingScreen = document.createElement('div');
+  loadingScreen.id = 'loading-screen';
+  loadingScreen.textContent = 'Loading...'; // You can customize the loading message here
+
+  // Append the loading screen element to the document body
+  document.body.appendChild(loadingScreen);
+}
+
+function hideLoadingScreen() {
+  // Find and remove the loading screen element from the document body
+  const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.parentNode.removeChild(loadingScreen);
+  }
+}
+
 // Test Login
 function sayHello() {
   const authorizationHeader = sessionStorage.getItem("authToken");
@@ -74,27 +97,29 @@ function signupDriver(event) {
   const username = document.getElementById("driver-username").value;
   const password = document.getElementById("driver-password").value;
   const role = "ROLE_DRIVER";
+  const licenceNumber = document.getElementById("licenceNumber").value;
 
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   // Create a data object with the input values
-  const raw = {
+  var raw = JSON.stringify({
     "name": name,
     "userName": username,
     "password": password,
     "address": address,
     "mobileNumber": mobile,
     "email": email,
-    "role": role
-  };
-
-
+    "role": role,
+    "licenceNumber": licenceNumber,
+    "rating" : 0.0
+  });
+  
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
-    body: JSON.stringify(raw),
+    body: raw,
     redirect: 'follow'
   };
 
@@ -103,7 +128,7 @@ function signupDriver(event) {
     .then(result => {
       console.log(result);
       // Show success message
-      // alert("Signup successful, Please Sign In");
+      alert("Signup successful, Please Sign In");
       // Redirect to another page or perform any other action
       // window.location.href = 'customerDashboard.html';
     })

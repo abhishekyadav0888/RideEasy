@@ -60,7 +60,7 @@ public class AppConfig {
 //                        .requestMatchers("/customers/**").hasRole("CUSTOMER")
 
 //                        .requestMatchers().hasRole("DRIVER")
-                            .requestMatchers("/drivers/add","/drivers/update","/drivers/delete/{id}","/drivers/hello","/driver/signIn").hasRole("DRIVER")
+                            .requestMatchers("/drivers/add","/drivers/update","/drivers/delete/{id}","/drivers/hello","/driver/signIn","/cabs/add").hasRole("DRIVER")
 
 //                        .requestMatchers("/drivers/**").hasRole("DRIVER")
                             .anyRequest().authenticated();
