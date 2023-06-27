@@ -197,3 +197,10 @@ nav {
 .button-24:active {
   opacity: .5;
 }
+
+
+
+
+.center-table {
+  margin: 0 auto; /* Set left and right margins to auto */
+}

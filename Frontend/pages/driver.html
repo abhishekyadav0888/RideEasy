@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles/driverStyle.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
   <title>Driver Login</title>
 </head>
 
@@ -26,7 +30,7 @@
   </nav>
 
   <div class="container">
-    <form class="login-form" id="login-form">
+    <form class="login-form" id="login-form" onsubmit="handleLogin(event)">
       <h2>Driver Login</h2>
       <div class="form-group">
         <label for="username">Username:</label>
@@ -40,7 +44,7 @@
         <label for="remember">Remember me:</label>
         <input type="checkbox" id="remember" name="remember">
       </div>
-      <button type="submit" onclick="handleLogin()">Login</button>
+      <button type="submit" >Login</button>
     </form>
 
     <form class="signup-form" id="signup-form" onsubmit="signupDriver(event)">
@@ -72,7 +76,7 @@
         </div>
       <div class="form-group">
         <label for="license">License Number:</label>
-        <input type="text" id="license" name="license" required>
+        <input type="text" id="licenceNumber" name="license" required>
       </div>
       <div class="form-group">
         <label for="rating">Rating:</label>

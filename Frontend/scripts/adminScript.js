@@ -1,57 +1,140 @@
-function loginAdmin(){
-    window.location.href = 'adminDashboard.html';
-}
-// ***********************************************************************************************************************
+function handleLogin(event) {
+  event.preventDefault();
 
-// Function to handle successful login
-function handleSuccessfulLogin() {
-    const loginButton = document.querySelector('.login .dropbtn');
-    loginButton.textContent = 'Logout';
-    loginButton.style.backgroundColor = 'red';
-    // Add logout functionality here, if required
-  }
-  
-  // Add event listener to the form submit event
-  const loginForm = document.getElementById('login-form');
-  loginForm.addEventListener('submit', handleLogin);
-  
-  // Function to handle form submission
-  function handleLogin(event) {
-    event.preventDefault(); // Prevent form submission
-  
-    // Get form values
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-  
-    // Make AJAX request to API endpoint
-    fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Handle API response
-      if (data.success) {
-        // Call function to handle successful login
-        handleSuccessfulLogin();
-        // Redirect to admin page
-        window.location.href = 'adminDashboard.html';
+  // Get input values from the form fields
+  const user = document.getElementById("username").value;
+  const username = `ADMIN_${user}`;
+  const password = document.getElementById("password").value;
+
+  const encodedCredentials = btoa(`${username}:${password}`);
+  const basicAuthHeader = `Basic ${encodedCredentials}`;
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", basicAuthHeader);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  // Show loading screen here
+  showLoadingScreen();
+
+  fetch("http://localhost:8088/admin/signIn", requestOptions)
+    .then(response => {
+      if (response.ok) {
+        const authorizationHeader = response.headers.get('Authorization');
+        sessionStorage.setItem("authToken", authorizationHeader);
+        console.log(authorizationHeader);
+        sayHello();
+
+        // Simulate delay using setTimeout (remove this in production)
+        setTimeout(() => {
+          hideLoadingScreen();
+          window.location.href = 'adminDashboard.html';
+        }, 2000); // Replace 2000 with your desired delay in milliseconds
       } else {
-        // Display error message or show login failed notification
-        console.log('Login failed');
+        hideLoadingScreen();
+        throw new Error('Login failed');
       }
     })
     .catch(error => {
-      // Handle any errors that occur during the request
-      console.log('An error occurred:', error);
+      hideLoadingScreen();
+      console.log('error', error);
     });
+}
+
+function showLoadingScreen() {
+  // Create or show your loading screen element
+  const loadingScreen = document.createElement('div');
+  loadingScreen.id = 'loading-screen';
+  loadingScreen.textContent = 'Loading...'; // You can customize the loading message here
+
+  // Append the loading screen element to the document body
+  document.body.appendChild(loadingScreen);
+}
+
+function hideLoadingScreen() {
+  // Find and remove the loading screen element from the document body
+  const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.parentNode.removeChild(loadingScreen);
   }
-  
-  // Add further admin-specific functionality here
-  
+}
+
+
+
+
+// Test Login
+function sayHello() {
+  const authorizationHeader = sessionStorage.getItem("authToken");
+
+  if (!authorizationHeader) {
+    console.log("Authorization token not found in session storage.");
+    return;
+  }
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${authorizationHeader}`);
+
+  const requestOptions = {
+    method: 'GET',
+    headers: myHeaders
+  };
+
+  fetch("http://localhost:8088/customers/customer/hello", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
+
+// Logout Function
+function logout() {
+  sessionStorage.removeItem("authToken");
+  // Redirect or perform any other actions after logging out
+  window.location.href = 'index.html'; // Replace with the appropriate redirect URL
+}
+
+
+// Add new Customer 
+function signupAdmin(event) {
+  event.preventDefault();
+
+  // Get input values from the form fields
+  const name = document.getElementById("name").value;
+  const address = document.getElementById("address").value;
+  const email = document.getElementById("email").value;
+  const mobile = document.getElementById("mobile").value;
+  const username = document.getElementById("customer-username").value;
+  const password = document.getElementById("customer-password").value;
+  const role = "ROLE_CUSTOMER";
+
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "name": name,
+    "userName": username,
+    "password": password,
+    "address": address,
+    "mobileNumber": mobile,
+    "email": email,
+    "role" : role
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch("http://localhost:8088/customers/customer", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+

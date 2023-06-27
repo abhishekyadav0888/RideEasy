@@ -39,22 +39,22 @@ public class CabController {
 		logger.info("Class: CabController, method: updateCabHandler returned "+updatedCab);
 		return new ResponseEntity<>(updatedCab, HttpStatus.ACCEPTED);
 	}
-	@DeleteMapping("/delete")
-	public ResponseEntity<Cab> deleteCabHandler( Integer cabId){
+	@DeleteMapping("/delete/{cabId}")
+	public ResponseEntity<Cab> deleteCabHandler(@Valid @PathVariable Integer cabId){
 		logger.info("Class: CabController, method: deleteCabHandler started");
 		Cab deletedCab= cabService.deleteCab(cabId);
 		logger.info("Class: CabController, method: deleteCabHandler returned "+deletedCab);
 		return new ResponseEntity<>(deletedCab, HttpStatus.OK);
 	}
-	@GetMapping("/viewCabs")
-	public ResponseEntity<List<Cab>> viewCabsOfTypeHandler( String carType){
+	@GetMapping("/viewCabs/{carType}")
+	public ResponseEntity<List<Cab>> viewCabsOfTypeHandler(@Valid @PathVariable String carType){
 		logger.info("Class: CabController, method: viewCabsOfTypeHandler started");
 		List<Cab> cabs= cabService.viewCabsOfType(carType);
 		logger.info("Class: CabController, method: viewCabsOfTypeHandler returned "+cabs);
 		return new ResponseEntity<>(cabs, HttpStatus.FOUND);
 	}
-	@GetMapping("/countCabs")
-	public ResponseEntity<Integer> countCabsOfTypeHandler( String carType){
+	@GetMapping("/countCabs/{carType}")
+	public ResponseEntity<Integer> countCabsOfTypeHandler(@Valid @PathVariable String carType){
 		logger.info("Class: CabController, method: countCabsOfTypeHandler started");
 		Integer count= cabService.countCabsOfType(carType);
 		logger.info("Class: CabController, method: countCabsOfTypeHandler returned "+count);
